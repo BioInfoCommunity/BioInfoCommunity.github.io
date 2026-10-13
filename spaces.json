@@ -1,0 +1,28 @@
+{
+  "spaces": [
+    {
+      "id": "alphafold",
+      "title": "AlphaFold & structural biology",
+      "status": "active",
+      "repos": [
+        {
+          "name": "AlphaFold-A-practical-guide",
+          "languages": [
+            { "code": "en", "label": "English", "branch": "main", "status": "published" },
+            { "code": "pt", "label": "Português", "branch": "portuguese", "status": "published" },
+            { "code": "fr", "label": "Français", "branch": "french", "status": "in-progress" },
+            { "code": "hi", "label": "हिन्दी", "branch": "hindi", "status": "in-progress" }
+          ]
+        },
+        {
+          "name": "Foundations-of-protein-structure",
+          "languages": []
+        }
+      ]
+    },
+    { "id": "ensembl", "title": "Ensembl", "status": "future", "repos": [] },
+    { "id": "biocuration", "title": "Biocuration", "status": "future", "repos": [] },
+    { "id": "infrastructure", "title": "Infrastructure & services", "status": "future", "repos": [] }
+  ],
+  "ignoredRepos": [".github", "BioInfoCommunity.github.io", "test-course", "course-template"]
+}

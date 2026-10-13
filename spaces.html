@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Community spaces | BioInfoCommunity</title>
+  <meta name="description" content="Repositories, translations and status for each BioInfoCommunity space.">
+
+  <!-- EMBL-EBI Visual Framework 2.5.30 and EBI global header/footer -->
+  <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.30/css/styles.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@visual-framework/ebi-header-footer@2.1.5/ebi-header-footer.css">
+  <style>
+    .customBadgeGrey {
+      background-color: #f3f3f3 !important;
+      border: 0 !important;
+      border-radius: 2px !important;
+      color: #373a36 !important;
+      font-weight: 500 !important;
+      font-size: 12px !important;
+    }
+
+    .customBadgeBlue {
+      background-color: #3b6fb6 !important;
+      border: #3b6fb6;
+      border-radius: 2px !important;
+      color: #fff !important;
+      font-weight: 500 !important;
+      font-size: 12px !important;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Tell the VF 1.4 not to display a data protection banner. -->
+  <!-- You should use the 2.0 data protection banner from the contentHub. -->
+  <span data-protection-message-disable="true"></span>
+  <!-- embl-ebi global header -->
+  <header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed">
+    <div></div>
+    <div>
+      <nav id="search-bar" class="search-bar global-masthead-interactive-banner">
+        <div class="row padding-bottom-medium">
+          <div class="columns padding-top-medium">
+            <button class="close-button" aria-label="Close alert" type="button">
+              <span aria-hidden="true">x</span>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <form id="global-search" name="global-search" action="/ebisearch/search.ebi" method="GET" class="">
+            <div>
+              <div class="input-group">
+                <label class="vf-form__label vf-u-sr-only" for="global-searchbox">Search all of EMBL-EBI</label>
+                <input type="text" name="query" id="global-searchbox" class="input-group-field"
+                  placeholder="Search all of EMBL-EBI">
+                <div class="input-group-button">
+                  <input type="submit" name="submit" value="Search" class="button">
+                  <input type="hidden" name="db" value="allebi" checked="checked">
+                  <input type="hidden" name="requestFrom" value="masthead-black-bar" checked="checked">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </nav>
+    </div>
+    <div>
+      <nav class="row">
+        <ul id="global-nav" class="menu global-nav text-right" data-vf-google-analytics-region="Black bar">
+          <li class="float-right show-for-medium embl-ebi">
+            <a class="float-right" style="color: transparent;" href="https://www.ebi.ac.uk">EMBL-EBI</a>
+          </li>
+          <!--<li class="float-right search">
+          <a href="#" class="inline-block collpased float-left search-toggle">
+            <span class="show-for-small-only">Search</span>
+          </a>
+        </li>
+        <li class="what about">
+          <a href="https://www.ebi.ac.uk/about">About us</a>
+        </li>
+        <li class="what training">
+          <a href="https://www.ebi.ac.uk/training">Training</a>
+        </li>
+        <li class="what research">
+          <a href="https://www.ebi.ac.uk/research">Research</a>
+        </li>
+        <li class="what services">
+          <a href="https://www.ebi.ac.uk/services">Services</a>
+        </li>
+        <li class="where ebi">
+          <a href="https://www.ebi.ac.uk">EMBL-EBI home</a>
+        </li> -->
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="vf-body">
+    <main id="top">
+
+      <div class="vf-content vf-box">
+        <div class="vf-section-header">
+          <h1 class="vf-section-header__heading">Community spaces</h1>
+          <p class="vf-section-header__subheading">Repositories, translations and status for each space. Refreshed automatically from GitHub.</p>
+          <div class="vf-u-padding--400"></div>
+        </div>
+
+        <div id="spaces" aria-live="polite">
+          <noscript><p>This listing needs JavaScript to load the repository data.</p></noscript>
+        </div>
+      </div>
+
+    </main>
+
+    <script>
+      (function () {
+        "use strict";
+
+        var TRANSLATION_STATUS = {
+          "published": { label: "Published", cls: "vf-badge--primary" },
+          "in-progress": { label: "In progress", cls: "vf-badge--secondary" },
+          "planned": { label: "Planned", cls: "" }
+        };
+        var SPACE_STATUS = {
+          "active": { label: "Active", cls: "vf-badge--primary" },
+          "future": { label: "Future", cls: "vf-badge--secondary" }
+        };
+
+        // Builds an element from plain values, so repo data is never parsed as HTML.
+        function el(tag, attrs, children) {
+          var node = document.createElement(tag);
+          Object.keys(attrs || {}).forEach(function (key) {
+            if (key === "text") node.textContent = attrs[key];
+            else if (attrs[key]) node.setAttribute(key, attrs[key]);
+          });
+          (children || []).forEach(function (child) {
+            if (child) node.appendChild(typeof child === "string" ? document.createTextNode(child) : child);
+          });
+          return node;
+        }
+
+        function badge(info) {
+          return el("span", { "class": "vf-badge " + info.cls, text: info.label });
+        }
+
+        function link(href, text) {
+          return el("a", { href: href, text: text });
+        }
+
+        function formatDate(iso) {
+          return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+        }
+
+        function translationItem(t) {
+          var info = TRANSLATION_STATUS[t.status] || TRANSLATION_STATUS.planned;
+          var links = [];
+          if (t.course_url) links.push(link(t.course_url, "Course"));
+          if (t.branch_url) links.push(link(t.branch_url, "Branch " + t.branch));
+          return el("li", null, [
+            el("strong", { text: t.label + " (" + t.code + ") " }),
+            badge(info),
+            links.length ? " " : null,
+            links[0] || null,
+            links[1] ? " · " : null,
+            links[1] || null
+          ]);
+        }
+
+        function repoCard(repo) {
+          var meta = "Updated " + formatDate(repo.pushed_at) + " · " + repo.stars + " star" + (repo.stars === 1 ? "" : "s");
+          var children = [
+            el("h3", { "class": "vf-card__heading" }, [link(repo.html_url, repo.name)]),
+            el("p", { "class": "vf-card__subheading", text: meta }),
+            el("p", { "class": "vf-card__text", text: repo.description || "No description provided." })
+          ];
+
+          if (repo.topics && repo.topics.length) {
+            children.push(el("p", { "class": "vf-card__text", text: "Topics: " + repo.topics.join(", ") }));
+          }
+
+          if (repo.code_languages && repo.code_languages.length) {
+            var codeText = repo.code_languages.map(function (l) { return l.name + " " + l.percent + "%"; }).join(", ");
+            children.push(el("p", { "class": "vf-card__text", text: "Code: " + codeText }));
+          }
+
+          var siteLinks = [];
+          if (repo.course_url) siteLinks.push(link(repo.course_url, "Course site"));
+          if (repo.homepage) siteLinks.push(link(repo.homepage, "Homepage"));
+          if (siteLinks.length) {
+            children.push(el("p", { "class": "vf-card__text" }, [siteLinks[0], siteLinks[1] ? " · " : null, siteLinks[1] || null]));
+          }
+
+          children.push(el("h4", { text: "Translations" }));
+          children.push(el("ul", null, repo.translations.map(translationItem)));
+
+          return el("article", { "class": "vf-card vf-card--bordered" }, [
+            el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, children)
+          ]);
+        }
+
+        function spaceSection(space) {
+          var info = SPACE_STATUS[space.status] || SPACE_STATUS.future;
+          var heading = el("div", { "class": "vf-section-header" }, [
+            el("h2", { "class": "vf-section-header__heading", id: space.id + "-heading", text: space.title }),
+            el("p", null, [badge(info)])
+          ]);
+
+          var body = space.repos.length
+            ? el("div", { "class": "vf-grid vf-grid__col-2" }, space.repos.map(repoCard))
+            : el("p", { text: "No repositories yet." });
+
+          return el("section", { id: space.id, "class": "vf-u-padding__bottom--600", "aria-labelledby": space.id + "-heading" }, [heading, body]);
+        }
+
+        var container = document.getElementById("spaces");
+
+        fetch("data/repos.json", { cache: "no-store" })
+          .then(function (res) {
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            return res.json();
+          })
+          .then(function (data) {
+            container.textContent = "";
+            data.spaces.forEach(function (space) {
+              container.appendChild(spaceSection(space));
+            });
+          })
+          .catch(function () {
+            container.textContent = "";
+            container.appendChild(el("p", { text: "The repository listing could not be loaded. Please try again later." }));
+          });
+      })();
+    </script>
+
+
+    <script>
+      (function () {
+        "use strict";
+
+        var TRANSLATION_STATUS = {
+          "published": { label: "Published", cls: "vf-badge--primary" },
+          "in-progress": { label: "In progress", cls: "vf-badge--secondary" },
+          "planned": { label: "Planned", cls: "" }
+        };
+        var SPACE_STATUS = {
+          "active": { label: "Active", cls: "vf-badge--primary" },
+          "future": { label: "Future", cls: "vf-badge--secondary" }
+        };
+
+        // Builds an element from plain values, so repo data is never parsed as HTML.
+        function el(tag, attrs, children) {
+          var node = document.createElement(tag);
+          Object.keys(attrs || {}).forEach(function (key) {
+            if (key === "text") node.textContent = attrs[key];
+            else if (attrs[key]) node.setAttribute(key, attrs[key]);
+          });
+          (children || []).forEach(function (child) {
+            if (child) node.appendChild(typeof child === "string" ? document.createTextNode(child) : child);
+          });
+          return node;
+        }
+
+        function badge(info) {
+          return el("span", { "class": "vf-badge " + info.cls, text: info.label });
+        }
+
+        function link(href, text) {
+          return el("a", { href: href, text: text });
+        }
+
+        function formatDate(iso) {
+          return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+        }
+
+        function translationItem(t) {
+          var info = TRANSLATION_STATUS[t.status] || TRANSLATION_STATUS.planned;
+          var links = [];
+          if (t.course_url) links.push(link(t.course_url, "Course"));
+          if (t.branch_url) links.push(link(t.branch_url, "Branch " + t.branch));
+          return el("li", null, [
+            el("strong", { text: t.label + " (" + t.code + ") " }),
+            badge(info),
+            links.length ? " " : null,
+            links[0] || null,
+            links[1] ? " · " : null,
+            links[1] || null
+          ]);
+        }
+
+        function repoCard(repo) {
+          var meta = "Updated " + formatDate(repo.pushed_at) + " · " + repo.stars + " star" + (repo.stars === 1 ? "" : "s");
+          var children = [
+            el("h3", { "class": "vf-card__heading" }, [link(repo.html_url, repo.name)]),
+            el("p", { "class": "vf-card__subheading", text: meta }),
+            el("p", { "class": "vf-card__text", text: repo.description || "No description provided." })
+          ];
+
+          if (repo.topics && repo.topics.length) {
+            children.push(el("p", { "class": "vf-card__text", text: "Topics: " + repo.topics.join(", ") }));
+          }
+
+          if (repo.code_languages && repo.code_languages.length) {
+            var codeText = repo.code_languages.map(function (l) { return l.name + " " + l.percent + "%"; }).join(", ");
+            children.push(el("p", { "class": "vf-card__text", text: "Code: " + codeText }));
+          }
+
+          var siteLinks = [];
+          if (repo.course_url) siteLinks.push(link(repo.course_url, "Course site"));
+          if (repo.homepage) siteLinks.push(link(repo.homepage, "Homepage"));
+          if (siteLinks.length) {
+            children.push(el("p", { "class": "vf-card__text" }, [siteLinks[0], siteLinks[1] ? " · " : null, siteLinks[1] || null]));
+          }
+
+          children.push(el("h4", { text: "Translations" }));
+          children.push(el("ul", null, repo.translations.map(translationItem)));
+
+          return el("article", { "class": "vf-card vf-card--bordered" }, [
+            el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, children)
+          ]);
+        }
+
+        function spaceSection(space) {
+          var info = SPACE_STATUS[space.status] || SPACE_STATUS.future;
+          var heading = el("div", { "class": "vf-section-header" }, [
+            el("h2", { "class": "vf-section-header__heading", id: space.id + "-heading", text: space.title }),
+            el("p", null, [badge(info)])
+          ]);
+
+          var body = space.repos.length
+            ? el("div", { "class": "vf-grid vf-grid__col-2" }, space.repos.map(repoCard))
+            : el("p", { text: "No repositories yet." });
+
+          return el("section", { id: space.id, "aria-labelledby": space.id + "-heading" }, [heading, body]);
+        }
+
+        var container = document.getElementById("spaces");
+
+        fetch("data/repos.json", { cache: "no-store" })
+          .then(function (res) {
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            return res.json();
+          })
+          .then(function (data) {
+            container.textContent = "";
+            data.spaces.forEach(function (space) {
+              container.appendChild(spaceSection(space));
+            });
+          })
+          .catch(function () {
+            container.textContent = "";
+            container.appendChild(el("p", { text: "The repository listing could not be loaded. Please try again later." }));
+          });
+      })();
+    </script>
+
+  </div>
+
+  <!-- embl-ebi global footer -->
+  <footer class="vf-footer" data-vf-google-analytics-region="ebi-footer">
+    <div class="vf-footer__inner">
+      <p class="vf-footer__notice">
+        <a class="vf-footer__link" href="//www.ebi.ac.uk/about/our-impact">This Community Space is a collaborative
+          platform supported by EMBL-EBI Training and partner organisations. <br>It enables scientific communities to
+          share
+          and develop training resources, improve accessibility across languages and regions, and exchange knowledge and
+          expertise.
+        </a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@visual-framework/ebi-header-footer@2.1.5/ebi-header-footer.js"></script> -->
+  <script src="https://assets.emblstatic.net/vf/v2.5.30/scripts/scripts.js"></script>
+</body>
+
+</html>
