@@ -172,6 +172,29 @@
           ]);
         }
 
+        var SAMPLE_NEWS = [
+          { title: "Portuguese translation of AlphaFold: A Practical Guide", kind: "Community update", text: "Find out about the community's work to make AlphaFold training accessible in more languages." },
+          { title: "AlphaFold in Practice: Research Use Cases", kind: "Webinar series", text: "Explore research applications of AlphaFold through community-led presentations." }
+        ];
+
+        function newsSection() {
+          return el("section", { id: "news", "class": "vf-u-padding__top--500", "aria-labelledby": "news-heading" }, [
+            el("div", { "class": "vf-section-header" }, [
+              el("h2", { "class": "vf-section-header__heading", id: "news-heading", text: "Community news" }),
+              el("p", { "class": "vf-section-header__subheading", text: "Updates, new translations, activities and opportunities to contribute. Sample items." })
+            ]),
+            el("div", { "class": "vf-stack vf-stack--400" }, SAMPLE_NEWS.map(function (item) {
+              return el("article", { "class": "vf-card vf-card--bordered" }, [
+                el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, [
+                  el("p", { "class": "vf-card__subheading", text: item.kind + " · Sample" }),
+                  el("h3", { "class": "vf-card__heading", text: item.title }),
+                  el("p", { "class": "vf-card__text", text: item.text })
+                ])
+              ]);
+            }))
+          ]);
+        }
+
         function spaceDetail(space) {
           var heading = el("div", { "class": "vf-section-header" }, [
             el("h1", { "class": "vf-section-header__heading", text: space.title }),
@@ -200,7 +223,8 @@
             heading,
             el("p", null, [spaceBadge(space)]),
             actions,
-            training
+            training,
+            newsSection()
           ]);
         }
 
@@ -266,412 +290,6 @@
           .catch(function () {
             container.textContent = "";
             container.appendChild(el("p", { text: "The community data could not be loaded. Please try again later." }));
-          });
-      })();
-    </script>
-
-
-    <script>
-      (function () {
-        "use strict";
-
-        var SPACE_STATUS = {
-          "active": { label: "Active", cls: "vf-badge--primary" },
-          "future": { label: "Future", cls: "vf-badge--secondary" }
-        };
-
-        // Badge text is the raw status value, so "in-progress" reads as written in spaces.json.
-        var TRANSLATION_BADGE = {
-          "published": "vf-badge--primary",
-          "in-progress": "vf-badge--secondary",
-          "planned": ""
-        };
-
-        // Builds an element from plain values, so repo data is never parsed as HTML.
-        function el(tag, attrs, children) {
-          var node = document.createElement(tag);
-          Object.keys(attrs || {}).forEach(function (key) {
-            if (key === "text") node.textContent = attrs[key];
-            else if (attrs[key]) node.setAttribute(key, attrs[key]);
-          });
-          (children || []).forEach(function (child) {
-            if (child) node.appendChild(typeof child === "string" ? document.createTextNode(child) : child);
-          });
-          return node;
-        }
-
-        function link(href, text) {
-          return el("a", { href: href, text: text });
-        }
-
-        function spaceBadge(space) {
-          var info = SPACE_STATUS[space.status] || SPACE_STATUS.future;
-          return el("span", { "class": "vf-badge " + info.cls, text: info.label });
-        }
-
-        function tutorialCount(space) {
-          var n = space.repos.length;
-          return n === 1 ? "1 tutorial" : n + " tutorials";
-        }
-
-        function languageChip(t) {
-          var name = t.course_url ? link(t.course_url, t.label) : el("span", { text: t.label });
-          return el("li", { "class": "vf-list--inline__item" }, [
-            name,
-            " ",
-            el("span", { "class": "vf-badge " + (TRANSLATION_BADGE[t.status] || ""), text: t.status }),
-            " "
-          ]);
-        }
-
-        function tutorialCard(repo) {
-          var children = [
-            el("h3", { "class": "vf-card__heading" }, [link(repo.html_url, repo.name)]),
-            el("p", { "class": "vf-card__text", text: repo.description || "No description provided." }),
-            el("h4", { "class": "vf-card__subheading", text: "Available languages" }),
-            el("ul", { "class": "vf-list vf-list--inline" }, repo.translations.map(languageChip))
-          ];
-          return el("article", { "class": "vf-card vf-card--bordered" }, [
-            el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, children)
-          ]);
-        }
-
-        function spaceDetail(space) {
-          var heading = el("div", { "class": "vf-section-header" }, [
-            el("h1", { "class": "vf-section-header__heading", text: space.title }),
-            el("p", { "class": "vf-section-header__subheading", text: space.description || "" })
-          ]);
-
-          var actions = el("p", null, [
-            link("#training", "Explore tutorials"),
-            " · ",
-            link("https://github.com/BioInfoCommunity", "Contribute on GitHub")
-          ]);
-
-          var training = el("section", { id: "training", "aria-labelledby": "training-heading" }, [
-            el("div", { "class": "vf-section-header" }, [
-              el("h2", { "class": "vf-section-header__heading", id: "training-heading", text: "Training resources" }),
-              el("p", { "class": "vf-section-header__subheading", text: "Explore the available tutorials and their translations." })
-            ]),
-            el("p", { text: tutorialCount(space) }),
-            space.repos.length
-              ? el("div", { "class": "vf-stack vf-stack--400" }, space.repos.map(tutorialCard))
-              : el("p", { text: "No tutorials yet." })
-          ]);
-
-          return el("div", null, [
-            el("p", null, [link("spaces.html", "All communities")]),
-            heading,
-            el("p", null, [spaceBadge(space)]),
-            actions,
-            training
-          ]);
-        }
-
-        function spaceIndexCard(space) {
-          return el("article", { "class": "vf-card vf-card--bordered" }, [
-            el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, [
-              el("h3", { "class": "vf-card__heading" }, [link("spaces.html?space=" + encodeURIComponent(space.id), space.title)]),
-              el("p", null, [spaceBadge(space)]),
-              el("p", { "class": "vf-card__text", text: space.description || "" }),
-              el("p", { "class": "vf-card__subheading", text: tutorialCount(space) })
-            ])
-          ]);
-        }
-
-        function spaceIndex(data) {
-          return el("div", null, [
-            el("div", { "class": "vf-section-header" }, [
-              el("h1", { "class": "vf-section-header__heading", text: "Community spaces" }),
-              el("p", { "class": "vf-section-header__subheading", text: "Choose a space to see its tutorials and translations." })
-            ]),
-            el("div", { "class": "vf-grid vf-grid__col-2" }, data.spaces.map(spaceIndexCard))
-          ]);
-        }
-
-        function notFound(id) {
-          return el("div", null, [
-            el("p", null, [link("spaces.html", "All communities")]),
-            el("h1", { "class": "vf-section-header__heading", text: "Space not found" }),
-            el("p", { text: "No community space matches “" + id + "”." })
-          ]);
-        }
-
-        function render(container, data) {
-          var spaceId = new URLSearchParams(window.location.search).get("space");
-          var view;
-          if (!spaceId) {
-            view = spaceIndex(data);
-            document.title = "Community spaces | BioInfoCommunity";
-          } else {
-            var space = data.spaces.filter(function (s) { return s.id === spaceId; })[0];
-            if (space) {
-              view = spaceDetail(space);
-              document.title = space.title + " | BioInfoCommunity";
-            } else {
-              view = notFound(spaceId);
-              document.title = "Space not found | BioInfoCommunity";
-            }
-          }
-          container.textContent = "";
-          container.appendChild(view);
-        }
-
-        var container = document.getElementById("app");
-
-        fetch("data/repos.json", { cache: "no-store" })
-          .then(function (res) {
-            if (!res.ok) throw new Error("HTTP " + res.status);
-            return res.json();
-          })
-          .then(function (data) {
-            render(container, data);
-          })
-          .catch(function () {
-            container.textContent = "";
-            container.appendChild(el("p", { text: "The community data could not be loaded. Please try again later." }));
-          });
-      })();
-    </script>
-
-
-    <script>
-      (function () {
-        "use strict";
-
-        var TRANSLATION_STATUS = {
-          "published": { label: "Published", cls: "vf-badge--primary" },
-          "in-progress": { label: "In progress", cls: "vf-badge--secondary" },
-          "planned": { label: "Planned", cls: "" }
-        };
-        var SPACE_STATUS = {
-          "active": { label: "Active", cls: "vf-badge--primary" },
-          "future": { label: "Future", cls: "vf-badge--secondary" }
-        };
-
-        // Builds an element from plain values, so repo data is never parsed as HTML.
-        function el(tag, attrs, children) {
-          var node = document.createElement(tag);
-          Object.keys(attrs || {}).forEach(function (key) {
-            if (key === "text") node.textContent = attrs[key];
-            else if (attrs[key]) node.setAttribute(key, attrs[key]);
-          });
-          (children || []).forEach(function (child) {
-            if (child) node.appendChild(typeof child === "string" ? document.createTextNode(child) : child);
-          });
-          return node;
-        }
-
-        function badge(info) {
-          return el("span", { "class": "vf-badge " + info.cls, text: info.label });
-        }
-
-        function link(href, text) {
-          return el("a", { href: href, text: text });
-        }
-
-        function formatDate(iso) {
-          return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
-        }
-
-        function translationItem(t) {
-          var info = TRANSLATION_STATUS[t.status] || TRANSLATION_STATUS.planned;
-          var links = [];
-          if (t.course_url) links.push(link(t.course_url, "Course"));
-          if (t.branch_url) links.push(link(t.branch_url, "Branch " + t.branch));
-          return el("li", null, [
-            el("strong", { text: t.label + " (" + t.code + ") " }),
-            badge(info),
-            links.length ? " " : null,
-            links[0] || null,
-            links[1] ? " · " : null,
-            links[1] || null
-          ]);
-        }
-
-        function repoCard(repo) {
-          var meta = "Updated " + formatDate(repo.pushed_at) + " · " + repo.stars + " star" + (repo.stars === 1 ? "" : "s");
-          var children = [
-            el("h3", { "class": "vf-card__heading" }, [link(repo.html_url, repo.name)]),
-            el("p", { "class": "vf-card__subheading", text: meta }),
-            el("p", { "class": "vf-card__text", text: repo.description || "No description provided." })
-          ];
-
-          if (repo.topics && repo.topics.length) {
-            children.push(el("p", { "class": "vf-card__text", text: "Topics: " + repo.topics.join(", ") }));
-          }
-
-          if (repo.code_languages && repo.code_languages.length) {
-            var codeText = repo.code_languages.map(function (l) { return l.name + " " + l.percent + "%"; }).join(", ");
-            children.push(el("p", { "class": "vf-card__text", text: "Code: " + codeText }));
-          }
-
-          var siteLinks = [];
-          if (repo.course_url) siteLinks.push(link(repo.course_url, "Course site"));
-          if (repo.homepage) siteLinks.push(link(repo.homepage, "Homepage"));
-          if (siteLinks.length) {
-            children.push(el("p", { "class": "vf-card__text" }, [siteLinks[0], siteLinks[1] ? " · " : null, siteLinks[1] || null]));
-          }
-
-          children.push(el("h4", { text: "Translations" }));
-          children.push(el("ul", null, repo.translations.map(translationItem)));
-
-          return el("article", { "class": "vf-card vf-card--bordered" }, [
-            el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, children)
-          ]);
-        }
-
-        function spaceSection(space) {
-          var info = SPACE_STATUS[space.status] || SPACE_STATUS.future;
-          var heading = el("div", { "class": "vf-section-header" }, [
-            el("h2", { "class": "vf-section-header__heading", id: space.id + "-heading", text: space.title }),
-            el("p", null, [badge(info)])
-          ]);
-
-          var body = space.repos.length
-            ? el("div", { "class": "vf-grid vf-grid__col-2" }, space.repos.map(repoCard))
-            : el("p", { text: "No repositories yet." });
-
-          return el("section", { id: space.id, "class": "vf-u-padding__bottom--600", "aria-labelledby": space.id + "-heading" }, [heading, body]);
-        }
-
-        var container = document.getElementById("spaces");
-
-        fetch("data/repos.json", { cache: "no-store" })
-          .then(function (res) {
-            if (!res.ok) throw new Error("HTTP " + res.status);
-            return res.json();
-          })
-          .then(function (data) {
-            container.textContent = "";
-            data.spaces.forEach(function (space) {
-              container.appendChild(spaceSection(space));
-            });
-          })
-          .catch(function () {
-            container.textContent = "";
-            container.appendChild(el("p", { text: "The repository listing could not be loaded. Please try again later." }));
-          });
-      })();
-    </script>
-
-
-    <script>
-      (function () {
-        "use strict";
-
-        var TRANSLATION_STATUS = {
-          "published": { label: "Published", cls: "vf-badge--primary" },
-          "in-progress": { label: "In progress", cls: "vf-badge--secondary" },
-          "planned": { label: "Planned", cls: "" }
-        };
-        var SPACE_STATUS = {
-          "active": { label: "Active", cls: "vf-badge--primary" },
-          "future": { label: "Future", cls: "vf-badge--secondary" }
-        };
-
-        // Builds an element from plain values, so repo data is never parsed as HTML.
-        function el(tag, attrs, children) {
-          var node = document.createElement(tag);
-          Object.keys(attrs || {}).forEach(function (key) {
-            if (key === "text") node.textContent = attrs[key];
-            else if (attrs[key]) node.setAttribute(key, attrs[key]);
-          });
-          (children || []).forEach(function (child) {
-            if (child) node.appendChild(typeof child === "string" ? document.createTextNode(child) : child);
-          });
-          return node;
-        }
-
-        function badge(info) {
-          return el("span", { "class": "vf-badge " + info.cls, text: info.label });
-        }
-
-        function link(href, text) {
-          return el("a", { href: href, text: text });
-        }
-
-        function formatDate(iso) {
-          return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
-        }
-
-        function translationItem(t) {
-          var info = TRANSLATION_STATUS[t.status] || TRANSLATION_STATUS.planned;
-          var links = [];
-          if (t.course_url) links.push(link(t.course_url, "Course"));
-          if (t.branch_url) links.push(link(t.branch_url, "Branch " + t.branch));
-          return el("li", null, [
-            el("strong", { text: t.label + " (" + t.code + ") " }),
-            badge(info),
-            links.length ? " " : null,
-            links[0] || null,
-            links[1] ? " · " : null,
-            links[1] || null
-          ]);
-        }
-
-        function repoCard(repo) {
-          var meta = "Updated " + formatDate(repo.pushed_at) + " · " + repo.stars + " star" + (repo.stars === 1 ? "" : "s");
-          var children = [
-            el("h3", { "class": "vf-card__heading" }, [link(repo.html_url, repo.name)]),
-            el("p", { "class": "vf-card__subheading", text: meta }),
-            el("p", { "class": "vf-card__text", text: repo.description || "No description provided." })
-          ];
-
-          if (repo.topics && repo.topics.length) {
-            children.push(el("p", { "class": "vf-card__text", text: "Topics: " + repo.topics.join(", ") }));
-          }
-
-          if (repo.code_languages && repo.code_languages.length) {
-            var codeText = repo.code_languages.map(function (l) { return l.name + " " + l.percent + "%"; }).join(", ");
-            children.push(el("p", { "class": "vf-card__text", text: "Code: " + codeText }));
-          }
-
-          var siteLinks = [];
-          if (repo.course_url) siteLinks.push(link(repo.course_url, "Course site"));
-          if (repo.homepage) siteLinks.push(link(repo.homepage, "Homepage"));
-          if (siteLinks.length) {
-            children.push(el("p", { "class": "vf-card__text" }, [siteLinks[0], siteLinks[1] ? " · " : null, siteLinks[1] || null]));
-          }
-
-          children.push(el("h4", { text: "Translations" }));
-          children.push(el("ul", null, repo.translations.map(translationItem)));
-
-          return el("article", { "class": "vf-card vf-card--bordered" }, [
-            el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, children)
-          ]);
-        }
-
-        function spaceSection(space) {
-          var info = SPACE_STATUS[space.status] || SPACE_STATUS.future;
-          var heading = el("div", { "class": "vf-section-header" }, [
-            el("h2", { "class": "vf-section-header__heading", id: space.id + "-heading", text: space.title }),
-            el("p", null, [badge(info)])
-          ]);
-
-          var body = space.repos.length
-            ? el("div", { "class": "vf-grid vf-grid__col-2" }, space.repos.map(repoCard))
-            : el("p", { text: "No repositories yet." });
-
-          return el("section", { id: space.id, "aria-labelledby": space.id + "-heading" }, [heading, body]);
-        }
-
-        var container = document.getElementById("spaces");
-
-        fetch("data/repos.json", { cache: "no-store" })
-          .then(function (res) {
-            if (!res.ok) throw new Error("HTTP " + res.status);
-            return res.json();
-          })
-          .then(function (data) {
-            container.textContent = "";
-            data.spaces.forEach(function (space) {
-              container.appendChild(spaceSection(space));
-            });
-          })
-          .catch(function () {
-            container.textContent = "";
-            container.appendChild(el("p", { text: "The repository listing could not be loaded. Please try again later." }));
           });
       })();
     </script>
