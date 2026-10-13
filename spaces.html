@@ -101,19 +101,339 @@
   <div class="vf-body">
     <main id="top">
 
-      <div class="vf-content vf-box">
-        <div class="vf-section-header">
-          <h1 class="vf-section-header__heading">Community spaces</h1>
-          <p class="vf-section-header__subheading">Repositories, translations and status for each space. Refreshed automatically from GitHub.</p>
-          <div class="vf-u-padding--400"></div>
-        </div>
-
-        <div id="spaces" aria-live="polite">
-          <noscript><p>This listing needs JavaScript to load the repository data.</p></noscript>
-        </div>
+      <div class="vf-content vf-box" id="app" aria-live="polite">
+        <noscript><p>This page needs JavaScript to load the community data.</p></noscript>
       </div>
 
     </main>
+
+    <script>
+      (function () {
+        "use strict";
+
+        var SPACE_STATUS = {
+          "active": { label: "Active", cls: "vf-badge--primary" },
+          "future": { label: "Future", cls: "vf-badge--secondary" }
+        };
+
+        // Badge text is the raw status value, so "in-progress" reads as written in spaces.json.
+        var TRANSLATION_BADGE = {
+          "published": "vf-badge--primary",
+          "in-progress": "vf-badge--secondary",
+          "planned": ""
+        };
+
+        // Builds an element from plain values, so repo data is never parsed as HTML.
+        function el(tag, attrs, children) {
+          var node = document.createElement(tag);
+          Object.keys(attrs || {}).forEach(function (key) {
+            if (key === "text") node.textContent = attrs[key];
+            else if (attrs[key]) node.setAttribute(key, attrs[key]);
+          });
+          (children || []).forEach(function (child) {
+            if (child) node.appendChild(typeof child === "string" ? document.createTextNode(child) : child);
+          });
+          return node;
+        }
+
+        function link(href, text) {
+          return el("a", { href: href, text: text });
+        }
+
+        function spaceBadge(space) {
+          var info = SPACE_STATUS[space.status] || SPACE_STATUS.future;
+          return el("span", { "class": "vf-badge " + info.cls, text: info.label });
+        }
+
+        function tutorialCount(space) {
+          var n = space.repos.length;
+          return n === 1 ? "1 tutorial" : n + " tutorials";
+        }
+
+        function languageChip(t) {
+          var name = t.course_url ? link(t.course_url, t.label) : el("span", { text: t.label });
+          return el("li", { "class": "vf-list--inline__item" }, [
+            name,
+            " ",
+            el("span", { "class": "vf-badge " + (TRANSLATION_BADGE[t.status] || ""), text: t.status }),
+            " "
+          ]);
+        }
+
+        function tutorialCard(repo) {
+          var children = [
+            el("h3", { "class": "vf-card__heading" }, [link(repo.html_url, repo.name)]),
+            el("p", { "class": "vf-card__text", text: repo.description || "No description provided." }),
+            el("h4", { "class": "vf-card__subheading", text: "Available languages" }),
+            el("ul", { "class": "vf-list vf-list--inline" }, repo.translations.map(languageChip))
+          ];
+          return el("article", { "class": "vf-card vf-card--bordered" }, [
+            el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, children)
+          ]);
+        }
+
+        function spaceDetail(space) {
+          var heading = el("div", { "class": "vf-section-header" }, [
+            el("h1", { "class": "vf-section-header__heading", text: space.title }),
+            el("p", { "class": "vf-section-header__subheading", text: space.description || "" })
+          ]);
+
+          var actions = el("p", null, [
+            link("#training", "Explore tutorials"),
+            " · ",
+            link("https://github.com/BioInfoCommunity", "Contribute on GitHub")
+          ]);
+
+          var training = el("section", { id: "training", "aria-labelledby": "training-heading" }, [
+            el("div", { "class": "vf-section-header" }, [
+              el("h2", { "class": "vf-section-header__heading", id: "training-heading", text: "Training resources" }),
+              el("p", { "class": "vf-section-header__subheading", text: "Explore the available tutorials and their translations." })
+            ]),
+            el("p", { text: tutorialCount(space) }),
+            space.repos.length
+              ? el("div", { "class": "vf-stack vf-stack--400" }, space.repos.map(tutorialCard))
+              : el("p", { text: "No tutorials yet." })
+          ]);
+
+          return el("div", null, [
+            el("p", null, [link("spaces.html", "All communities")]),
+            heading,
+            el("p", null, [spaceBadge(space)]),
+            actions,
+            training
+          ]);
+        }
+
+        function spaceIndexCard(space) {
+          return el("article", { "class": "vf-card vf-card--bordered" }, [
+            el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, [
+              el("h3", { "class": "vf-card__heading" }, [link("spaces.html?space=" + encodeURIComponent(space.id), space.title)]),
+              el("p", null, [spaceBadge(space)]),
+              el("p", { "class": "vf-card__text", text: space.description || "" }),
+              el("p", { "class": "vf-card__subheading", text: tutorialCount(space) })
+            ])
+          ]);
+        }
+
+        function spaceIndex(data) {
+          return el("div", null, [
+            el("div", { "class": "vf-section-header" }, [
+              el("h1", { "class": "vf-section-header__heading", text: "Community spaces" }),
+              el("p", { "class": "vf-section-header__subheading", text: "Choose a space to see its tutorials and translations." })
+            ]),
+            el("div", { "class": "vf-grid vf-grid__col-2" }, data.spaces.map(spaceIndexCard))
+          ]);
+        }
+
+        function notFound(id) {
+          return el("div", null, [
+            el("p", null, [link("spaces.html", "All communities")]),
+            el("h1", { "class": "vf-section-header__heading", text: "Space not found" }),
+            el("p", { text: "No community space matches “" + id + "”." })
+          ]);
+        }
+
+        function render(container, data) {
+          var spaceId = new URLSearchParams(window.location.search).get("space");
+          var view;
+          if (!spaceId) {
+            view = spaceIndex(data);
+            document.title = "Community spaces | BioInfoCommunity";
+          } else {
+            var space = data.spaces.filter(function (s) { return s.id === spaceId; })[0];
+            if (space) {
+              view = spaceDetail(space);
+              document.title = space.title + " | BioInfoCommunity";
+            } else {
+              view = notFound(spaceId);
+              document.title = "Space not found | BioInfoCommunity";
+            }
+          }
+          container.textContent = "";
+          container.appendChild(view);
+        }
+
+        var container = document.getElementById("app");
+
+        fetch("data/repos.json", { cache: "no-store" })
+          .then(function (res) {
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            return res.json();
+          })
+          .then(function (data) {
+            render(container, data);
+          })
+          .catch(function () {
+            container.textContent = "";
+            container.appendChild(el("p", { text: "The community data could not be loaded. Please try again later." }));
+          });
+      })();
+    </script>
+
+
+    <script>
+      (function () {
+        "use strict";
+
+        var SPACE_STATUS = {
+          "active": { label: "Active", cls: "vf-badge--primary" },
+          "future": { label: "Future", cls: "vf-badge--secondary" }
+        };
+
+        // Badge text is the raw status value, so "in-progress" reads as written in spaces.json.
+        var TRANSLATION_BADGE = {
+          "published": "vf-badge--primary",
+          "in-progress": "vf-badge--secondary",
+          "planned": ""
+        };
+
+        // Builds an element from plain values, so repo data is never parsed as HTML.
+        function el(tag, attrs, children) {
+          var node = document.createElement(tag);
+          Object.keys(attrs || {}).forEach(function (key) {
+            if (key === "text") node.textContent = attrs[key];
+            else if (attrs[key]) node.setAttribute(key, attrs[key]);
+          });
+          (children || []).forEach(function (child) {
+            if (child) node.appendChild(typeof child === "string" ? document.createTextNode(child) : child);
+          });
+          return node;
+        }
+
+        function link(href, text) {
+          return el("a", { href: href, text: text });
+        }
+
+        function spaceBadge(space) {
+          var info = SPACE_STATUS[space.status] || SPACE_STATUS.future;
+          return el("span", { "class": "vf-badge " + info.cls, text: info.label });
+        }
+
+        function tutorialCount(space) {
+          var n = space.repos.length;
+          return n === 1 ? "1 tutorial" : n + " tutorials";
+        }
+
+        function languageChip(t) {
+          var name = t.course_url ? link(t.course_url, t.label) : el("span", { text: t.label });
+          return el("li", { "class": "vf-list--inline__item" }, [
+            name,
+            " ",
+            el("span", { "class": "vf-badge " + (TRANSLATION_BADGE[t.status] || ""), text: t.status }),
+            " "
+          ]);
+        }
+
+        function tutorialCard(repo) {
+          var children = [
+            el("h3", { "class": "vf-card__heading" }, [link(repo.html_url, repo.name)]),
+            el("p", { "class": "vf-card__text", text: repo.description || "No description provided." }),
+            el("h4", { "class": "vf-card__subheading", text: "Available languages" }),
+            el("ul", { "class": "vf-list vf-list--inline" }, repo.translations.map(languageChip))
+          ];
+          return el("article", { "class": "vf-card vf-card--bordered" }, [
+            el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, children)
+          ]);
+        }
+
+        function spaceDetail(space) {
+          var heading = el("div", { "class": "vf-section-header" }, [
+            el("h1", { "class": "vf-section-header__heading", text: space.title }),
+            el("p", { "class": "vf-section-header__subheading", text: space.description || "" })
+          ]);
+
+          var actions = el("p", null, [
+            link("#training", "Explore tutorials"),
+            " · ",
+            link("https://github.com/BioInfoCommunity", "Contribute on GitHub")
+          ]);
+
+          var training = el("section", { id: "training", "aria-labelledby": "training-heading" }, [
+            el("div", { "class": "vf-section-header" }, [
+              el("h2", { "class": "vf-section-header__heading", id: "training-heading", text: "Training resources" }),
+              el("p", { "class": "vf-section-header__subheading", text: "Explore the available tutorials and their translations." })
+            ]),
+            el("p", { text: tutorialCount(space) }),
+            space.repos.length
+              ? el("div", { "class": "vf-stack vf-stack--400" }, space.repos.map(tutorialCard))
+              : el("p", { text: "No tutorials yet." })
+          ]);
+
+          return el("div", null, [
+            el("p", null, [link("spaces.html", "All communities")]),
+            heading,
+            el("p", null, [spaceBadge(space)]),
+            actions,
+            training
+          ]);
+        }
+
+        function spaceIndexCard(space) {
+          return el("article", { "class": "vf-card vf-card--bordered" }, [
+            el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, [
+              el("h3", { "class": "vf-card__heading" }, [link("spaces.html?space=" + encodeURIComponent(space.id), space.title)]),
+              el("p", null, [spaceBadge(space)]),
+              el("p", { "class": "vf-card__text", text: space.description || "" }),
+              el("p", { "class": "vf-card__subheading", text: tutorialCount(space) })
+            ])
+          ]);
+        }
+
+        function spaceIndex(data) {
+          return el("div", null, [
+            el("div", { "class": "vf-section-header" }, [
+              el("h1", { "class": "vf-section-header__heading", text: "Community spaces" }),
+              el("p", { "class": "vf-section-header__subheading", text: "Choose a space to see its tutorials and translations." })
+            ]),
+            el("div", { "class": "vf-grid vf-grid__col-2" }, data.spaces.map(spaceIndexCard))
+          ]);
+        }
+
+        function notFound(id) {
+          return el("div", null, [
+            el("p", null, [link("spaces.html", "All communities")]),
+            el("h1", { "class": "vf-section-header__heading", text: "Space not found" }),
+            el("p", { text: "No community space matches “" + id + "”." })
+          ]);
+        }
+
+        function render(container, data) {
+          var spaceId = new URLSearchParams(window.location.search).get("space");
+          var view;
+          if (!spaceId) {
+            view = spaceIndex(data);
+            document.title = "Community spaces | BioInfoCommunity";
+          } else {
+            var space = data.spaces.filter(function (s) { return s.id === spaceId; })[0];
+            if (space) {
+              view = spaceDetail(space);
+              document.title = space.title + " | BioInfoCommunity";
+            } else {
+              view = notFound(spaceId);
+              document.title = "Space not found | BioInfoCommunity";
+            }
+          }
+          container.textContent = "";
+          container.appendChild(view);
+        }
+
+        var container = document.getElementById("app");
+
+        fetch("data/repos.json", { cache: "no-store" })
+          .then(function (res) {
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            return res.json();
+          })
+          .then(function (data) {
+            render(container, data);
+          })
+          .catch(function () {
+            container.textContent = "";
+            container.appendChild(el("p", { text: "The community data could not be loaded. Please try again later." }));
+          });
+      })();
+    </script>
+
 
     <script>
       (function () {

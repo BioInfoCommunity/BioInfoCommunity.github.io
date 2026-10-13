@@ -128,7 +128,7 @@ for (const space of config.spaces) {
   for (const repoConfig of space.repos) {
     repos.push(await buildRepo(repoConfig));
   }
-  spaces.push({ id: space.id, title: space.title, status: space.status, repos });
+  spaces.push({ id: space.id, title: space.title, description: space.description, status: space.status, repos });
 }
 
 const output = { org: ORG, spaces, unassigned };

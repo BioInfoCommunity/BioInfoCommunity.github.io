@@ -4,6 +4,7 @@
     {
       "id": "alphafold",
       "title": "AlphaFold & structural biology",
+      "description": "An open space for sharing, translating and improving training resources in protein structure prediction and structural biology. Community members contribute their expertise to make learning materials more accessible across languages and research communities.",
       "status": "active",
       "repos": [
         {
@@ -93,18 +94,21 @@
     {
       "id": "ensembl",
       "title": "Ensembl",
+      "description": "Genome annotation and browsing resources. Planned as a future space.",
       "status": "future",
       "repos": []
     },
     {
       "id": "biocuration",
       "title": "Biocuration",
+      "description": "Curation practice and community-maintained biological data. Planned as a future space.",
       "status": "future",
       "repos": []
     },
     {
       "id": "infrastructure",
       "title": "Infrastructure & services",
+      "description": "Shared tools, computing infrastructure and services for the community. Planned as a future space.",
       "status": "future",
       "repos": []
     }
