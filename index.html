@@ -1,1 +1,273 @@
-Hello world!
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BioInfoTraining-Community</title>
+  <meta name="description"
+    content="BioInfoTraining-Community: a community space for bioinformatics training, translations and contributions.">
+
+  <!-- EMBL-EBI Visual Framework 2.5.30 and EBI global header/footer -->
+  <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.30/css/styles.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@visual-framework/ebi-header-footer@2.1.5/ebi-header-footer.css">
+  <style>
+    .customBadgeGrey {
+      background-color: #f3f3f3 !important;
+      border: 0 !important;
+      border-radius: 2px !important;
+      color: #373a36 !important;
+      font-weight: 500 !important;
+      font-size: 12px !important;
+    }
+
+    .customBadgeBlue {
+      background-color: #3b6fb6 !important;
+      border: #3b6fb6;
+      border-radius: 2px !important;
+      color: #fff !important;
+      font-weight: 500 !important;
+      font-size: 12px !important;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Tell the VF 1.4 not to display a data protection banner. -->
+  <!-- You should use the 2.0 data protection banner from the contentHub. -->
+  <span data-protection-message-disable="true"></span>
+  <!-- embl-ebi global header -->
+  <header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed">
+    <div></div>
+    <div>
+      <nav id="search-bar" class="search-bar global-masthead-interactive-banner">
+        <div class="row padding-bottom-medium">
+          <div class="columns padding-top-medium">
+            <button class="close-button" aria-label="Close alert" type="button">
+              <span aria-hidden="true">x</span>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <form id="global-search" name="global-search" action="/ebisearch/search.ebi" method="GET" class="">
+            <div>
+              <div class="input-group">
+                <label class="vf-form__label vf-u-sr-only" for="global-searchbox">Search all of EMBL-EBI</label>
+                <input type="text" name="query" id="global-searchbox" class="input-group-field"
+                  placeholder="Search all of EMBL-EBI">
+                <div class="input-group-button">
+                  <input type="submit" name="submit" value="Search" class="button">
+                  <input type="hidden" name="db" value="allebi" checked="checked">
+                  <input type="hidden" name="requestFrom" value="masthead-black-bar" checked="checked">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </nav>
+    </div>
+    <div>
+      <nav class="row">
+        <ul id="global-nav" class="menu global-nav text-right" data-vf-google-analytics-region="Black bar">
+          <li class="float-right show-for-medium embl-ebi">
+            <a class="float-right" style="color: transparent;" href="https://www.ebi.ac.uk">EMBL-EBI</a>
+          </li>
+          <!--<li class="float-right search">
+          <a href="#" class="inline-block collpased float-left search-toggle">
+            <span class="show-for-small-only">Search</span>
+          </a>
+        </li>
+        <li class="what about">
+          <a href="https://www.ebi.ac.uk/about">About us</a>
+        </li>
+        <li class="what training">
+          <a href="https://www.ebi.ac.uk/training">Training</a>
+        </li>
+        <li class="what research">
+          <a href="https://www.ebi.ac.uk/research">Research</a>
+        </li>
+        <li class="what services">
+          <a href="https://www.ebi.ac.uk/services">Services</a>
+        </li>
+        <li class="where ebi">
+          <a href="https://www.ebi.ac.uk">EMBL-EBI home</a>
+        </li> -->
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="vf-body">
+    <main id="top">
+
+      <section class="vf-hero vf-hero--800 vf-u-fullbleed">
+        <div class="vf-hero__content vf-box vf-stack vf-stack--400">
+          <p class="vf-hero__kicker">BioInfoCommunity &middot; Community space</p>
+          <h1 class="vf-hero__heading">Bioinformatics learning, translated and built together</h1>
+          <p class="vf-hero__text">BioInfoCommunity brings together training resources, community translations and
+            contributions for the life sciences, developed openly on GitHub.</p>
+        </div>
+      </section>
+
+      <div class="vf-content">
+
+        <section id="spaces" aria-labelledby="spaces-heading">
+          <div class="vf-section-header">
+            <h2 class="vf-section-header__heading" id="spaces-heading">Our spaces</h2>
+            <p>The Community Space is a collaborative platform where scientific communities can share, translate and
+              improve training resources. It supports knowledge exchange, makes learning materials more accessible
+              across languages and regions, and creates opportunities for communities to contribute their expertise
+              and connect with one another.</p>
+            <p class="vf-section-header__subheading">Thematic areas of the community. Each one hosts its own content,
+              maintainers and roadmap.</p>
+            <div class="vf-u-padding--400"></div>
+          </div>
+          <div
+            class="homepage-summaries vf-u-fullbleed vf-u-background-color-ui--grey--light vf-u-padding__top--500 vf-u-padding__bottom--600">
+            <div class="vf-grid vf-grid__col-2">
+              <article class="vf-card vf-card--brand vf-card--bordered">
+                <div class="vf-card__content vf-stack vf-stack--400">
+                  <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeBlue">Active</span>
+                  <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">AlphaFold and
+                      structural biology <svg aria-hidden="true"
+                        class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
+                          fill="currentColor" fill-rule="nonzero"></path>
+                      </svg>
+                    </a></h3>
+                  <p class="vf-card__text">Practical guidance on predicting and interpreting protein structures with
+                    AlphaFold, and the foundations of protein structure behind it.</p>
+                </div>
+              </article>
+              <article class="vf-card vf-card--brand vf-card--bordered">
+                <div class="vf-card__content vf-stack vf-stack--400">
+                  <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeGrey">Future</span>
+                  <h3 class="vf-card__heading">Ensembl </h3>
+
+                  <p class="vf-card__text">Genome annotation and browsing resources, planned as a future space.</p>
+                </div>
+              </article>
+              <article class="vf-card vf-card--brand vf-card--bordered">
+                <div class="vf-card__content vf-stack vf-stack--400">
+                  <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeGrey">Future</span>
+                  <h3 class="vf-card__heading">Biocuration</h3>
+                  <p class="vf-card__text">Curation practice and community-maintained biological data, planned as a
+                    future space.</p>
+                </div>
+              </article>
+              <article class="vf-card vf-card--brand vf-card--bordered">
+                <div class="vf-card__content vf-stack vf-stack--400">
+                  <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeGrey">Future</span>
+                  <h3 class="vf-card__heading">Infrastructure &amp; services</h3>
+                  <p class="vf-card__text">Shared tools, computing infrastructure and services for the community,
+                    planned as a future space.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <div
+          class="vf-u-fullbleed vf-u-background-color-ui--off-white | vf-u-padding__top--500 vf-u-padding__bottom--600 explore-container" style="background-image: url(https://acxngcvroo.cloudimg.io/v7/www.embl.org/files/wp-content/uploads/20230522_EMBL-org-explore_s-scaled.jpg); background-color: transparent;">
+          <section id="community" aria-labelledby="community-heading">
+            <div class="vf-section-header">
+              <h2 class="vf-section-header__heading" id="community-heading" style="color: #fff;">Community content</h2>
+              <p class="vf-section-header__subheading" style="color: #fff;">Resources that cut across every space: ways to contribute and news.</p>
+              <div class="vf-u-padding--400"></div>
+            </div>
+            <div class="vf-grid vf-grid__col-4">
+              <article class="vf-card">
+                <div class="vf-card__content vf-stack vf-stack--400">
+                  <h3 class="vf-card__heading"><a class="vf-card__link"
+                      href="https://github.com/BioInfoCommunity/AlphaFold-A-practical-guide">About</a></h3>
+                  <p class="vf-card__text">Training resources, community translations and contributions</p>
+                </div>
+              </article>
+              <article class="vf-card">
+                <div class="vf-card__content vf-stack vf-stack--400">
+                  <h3 class="vf-card__heading"><a class="vf-card__link"
+                      href="https://github.com/BioInfoCommunity/AlphaFold-A-practical-guide">Github</a></h3>
+                  <p class="vf-card__text">Access the Github repositories for contributors</p>
+                </div>
+              </article>
+              <article class="vf-card">
+                <div class="vf-card__content vf-stack vf-stack--400">
+                  <h3 class="vf-card__heading"><a class="vf-card__link"
+                      href="https://github.com/BioInfoCommunity/AlphaFold-A-practical-guide">Get involved</a></h3>
+                  <p class="vf-card__text">Get in touch to participate as a contributor or moderator</p>
+                </div>
+              </article>
+              <article class="vf-card">
+                <div class="vf-card__content vf-stack vf-stack--400">
+                  <h3 class="vf-card__heading"><a class="vf-card__link"
+                      href="https://github.com/BioInfoCommunity">Feedback</a></h3>
+                  <p class="vf-card__text">Help us improve by letting us know your feedback</p>
+                </div>
+              </article>
+            </div>
+          </section>
+
+
+        </div>
+
+        <div class="vf-content vf-box">
+          <section id="news" aria-labelledby="news-heading">
+            <div class="vf-section-header">
+              <h2 class="vf-section-header__heading" id="news-heading">News</h2>
+              <p class="vf-section-header__subheading">Sample items for team review. Replace with real announcements before publishing.</p>
+              <div class="vf-u-padding--400"></div>
+            </div>
+            <div class="vf-grid vf-grid__col-3">
+              <article class="vf-card">
+                <div class="vf-card__content vf-stack vf-stack--400">
+                  <p class="vf-card__subheading">9 October 2026</p>
+                  <h3 class="vf-card__heading"><a class="vf-card__link" href="https://github.com/BioInfoCommunity">Sample: course module update</a></h3>
+                  <p class="vf-card__text">Placeholder text describing an update to one of the training courses.</p>
+                </div>
+              </article>
+              <article class="vf-card">
+                <div class="vf-card__content vf-stack vf-stack--400">
+                  <p class="vf-card__subheading">5 October 2026</p>
+                  <h3 class="vf-card__heading"><a class="vf-card__link" href="https://github.com/BioInfoCommunity">Sample: new translation available</a></h3>
+                  <p class="vf-card__text">Placeholder text for a newly added translation of course content.</p>
+                </div>
+              </article>
+              <article class="vf-card">
+                <div class="vf-card__content vf-stack vf-stack--400">
+                  <p class="vf-card__subheading">1 October 2026</p>
+                  <h3 class="vf-card__heading"><a class="vf-card__link" href="https://github.com/BioInfoCommunity">Sample: community call scheduled</a></h3>
+                  <p class="vf-card__text">Placeholder text for an upcoming community event or call.</p>
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
+
+      </div>
+      <div class="vf-u-padding--400"></div>
+    </main>
+  </div>
+
+  <!-- embl-ebi global footer -->
+  <footer class="vf-footer" data-vf-google-analytics-region="ebi-footer">
+    <div class="vf-footer__inner">
+      <p class="vf-footer__notice">
+        <a class="vf-footer__link" href="//www.ebi.ac.uk/about/our-impact">This Community Space is a collaborative
+          platform supported by EMBL-EBI Training and partner organisations. <br>It enables scientific communities to
+          share
+          and develop training resources, improve accessibility across languages and regions, and exchange knowledge and
+          expertise.
+        </a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@visual-framework/ebi-header-footer@2.1.5/ebi-header-footer.js"></script> -->
+  <script src="https://assets.emblstatic.net/vf/v2.5.30/scripts/scripts.js"></script>
+</body>
+
+</html>
