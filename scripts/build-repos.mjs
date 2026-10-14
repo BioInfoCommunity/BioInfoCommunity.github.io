@@ -108,9 +108,16 @@ async function buildRepo(repoConfig) {
       percent: totalBytes ? Math.round((bytes / totalBytes) * 1000) / 10 : 0,
     }));
 
+  // Optional cover image, linked from its external host (never copied into the repo).
+  const image = repoConfig.image ?? null;
+  if (image && !/^https:\/\//.test(image)) {
+    throw new Error(`${name}: image must be an https URL`);
+  }
+
   return {
     name,
     description: repo.description,
+    image,
     html_url: repo.html_url,
     course_url: repo.has_pages ? `${SITE}/${name}/` : null,
     homepage: repo.homepage || null,

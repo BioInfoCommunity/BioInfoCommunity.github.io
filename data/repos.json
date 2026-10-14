@@ -10,6 +10,7 @@
         {
           "name": "AlphaFold-A-practical-guide",
           "description": "This tutorial is aimed at researchers who are interested in using AlphaFold to predict protein structures and integrate these predictions into their projects. An undergraduate-level knowledge of protein structure and structural biology would be an advantage.",
+          "image": "https://trainingcontent.embl.org/sites/default/files/book-images/AlphaFold.png",
           "html_url": "https://github.com/BioInfoCommunity/AlphaFold-A-practical-guide",
           "course_url": "https://bioinfocommunity.github.io/AlphaFold-A-practical-guide/",
           "homepage": null,
@@ -18,7 +19,7 @@
             "structures"
           ],
           "stars": 0,
-          "pushed_at": "2026-10-14T09:07:32Z",
+          "pushed_at": "2026-10-14T10:49:35Z",
           "code_languages": [
             {
               "name": "Python",
@@ -71,6 +72,7 @@
         {
           "name": "Foundations-of-protein-structure",
           "description": "This tutorial is aimed at researchers who are interested in using protein structures and integrate these predictions into their projects. An undergraduate-level knowledge of protein structure and structural biology would be an advantage.",
+          "image": "https://trainingcontent.embl.org/sites/default/files/book-images/Screenshot%202026-02-26%20at%2015.19.41.png",
           "html_url": "https://github.com/BioInfoCommunity/Foundations-of-protein-structure",
           "course_url": "https://bioinfocommunity.github.io/Foundations-of-protein-structure/",
           "homepage": null,

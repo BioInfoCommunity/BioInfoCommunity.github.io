@@ -13,7 +13,15 @@
     href="https://cdn.jsdelivr.net/npm/@visual-framework/ebi-header-footer@2.1.5/ebi-header-footer.css">
   <style>
     .space-languages {
-      font-size: 16px;
+      font-size: 16px !important;
+    }
+
+    .vf-summary__title {
+      font-weight: 500;
+    }
+
+    .vf-summary__date .vf-summary__category {
+      display: inline;
     }
 
     .customBadgeGrey {
@@ -159,7 +167,7 @@
               items.push(t.course_url ? link(t.course_url, t.label) : el("span", { text: t.label }));
             });
           });
-          return [el("p", { "class": "space-languages vf-u-margin--0" }, items)];
+          return [el("p", { "class": "space-languages" }, items)];
         }
 
         function formatDate(iso) {
@@ -167,13 +175,14 @@
         }
 
         function tutorialCard(repo) {
-          return el("article", { "class": "vf-summary vf-summary--news" }, [
-            el("h3", { "class": "vf-summary__title" }, [
-              el("a", { "class": "vf-summary__link", href: repo.html_url, text: repo.name })
-            ]),
+          var cardClass = "vf-summary vf-summary--news" + (repo.image ? " vf-summary--has-image" : "");
+          return el("article", { "class": cardClass }, [
+            repo.image ? el("img", { "class": "vf-summary__image", src: repo.image, alt: repo.name, loading: "lazy" }) : null,
+            el("h3", { "class": "vf-summary__title", text: repo.name }), 
+            // [el("a", { "class": "vf-summary__link", href: repo.html_url, text: repo.name })]),
             el("div", { "class": "vf-summary__text vf-u-margin--0" }, [
               el("span", { text: repo.description || "No description provided." }),
-              el("p", { text: "Available languages" })
+              // el("p", {"class": "space-languages", text: "Available languages" })
             ].concat(languageGroups(repo.translations))),
             el("div", {"class": "vf-u-margin__top--400"})
           ]);
@@ -185,22 +194,20 @@
         ];
 
         function newsSection() {
-          return el("section", { id: "news", "class": "vf-u-padding__top--500", "aria-labelledby": "news-heading" }, [
+          return el("section", { id: "news", "class": "vf-u-padding__top--200", "aria-labelledby": "news-heading" }, [
             el("div", { "class": "vf-section-header" }, [
               el("h2", { "class": "vf-section-header__heading", id: "news-heading", text: "Community news" }),
-              el("p", { "class": "vf-section-header__subheading", text: "Updates, new translations, activities and opportunities to contribute. Sample items." })
+              el("p", { "class": "", text: "Updates, new translations, activities and opportunities to contribute. Sample items." })
             ]),
             el("div", null, SAMPLE_NEWS.map(function (item) {
               return el("article", { "class": "vf-summary vf-summary--news" }, [
-                el("span", { "class": "vf-summary__date", text: item.date }),
-                el("h3", { "class": "vf-summary__title" }, [
-                  el("a", { "class": "vf-summary__link", href: "https://github.com/BioInfoCommunity", text: item.title })
+                el("span", { "class": "vf-summary__date" }, [
+                  item.date,
+                  " | ",
+                  el("span", { "class": "vf-summary__category", text: item.kind + " · Sample" })
                 ]),
-                el("p", { "class": "vf-summary__text" }, [
-                  el("span", { "class": "vf-summary__category", text: item.kind + " · Sample" }),
-                  " ",
-                  item.text
-                ])
+                el("h3", { "class": "vf-summary__title vf-u-margin--0", text: item.title }),
+                el("p", { "class": "vf-summary__text", text: item.text })
               ]);
             }))
           ]);
@@ -216,7 +223,7 @@
           var training = el("section", { id: "training", "aria-labelledby": "training-heading" }, [
             el("div", { "class": "vf-section-header" }, [
               el("h2", { "class": "vf-section-header__heading", id: "training-heading", text: "Training resources" }),
-              el("p", { "class": "vf-section-header__subheading", text: "Explore the available tutorials and their translations." })
+              el("p", { "class": "", text: "Explore the available tutorials and their translations. Please click on the language labels to access the resource in a particular language." })
             ]),
             // el("p", { text: tutorialCount(space) }),
             space.repos.length
@@ -226,9 +233,10 @@
 
           return el("div", null, [
             // el("p", null, [link("spaces.html", "All communities")]),
-            el("p", null, [spaceBadge(space)]),
+            // el("p", null, [spaceBadge(space)]),
             // actions,
             training,
+            el("div", { "class": "vf-divider" }),
             newsSection()
           ]);
         }
@@ -236,8 +244,9 @@
         function spaceIndexCard(space) {
           return el("article", { "class": "vf-card" }, [
             el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, [
-              el("h3", { "class": "vf-card__heading" }, [link("spaces.html?space=" + encodeURIComponent(space.id), space.title)]),
-              el("p", null, [spaceBadge(space)]),
+              // el("h3", { "class": "vf-card__heading" }, [link("spaces.html?space=" + encodeURIComponent(space.id), space.title)]),
+              el("h3", { "class": "vf-card__heading", text: space.title }),
+              // el("p", null, [spaceBadge(space)]),
               el("p", { "class": "vf-card__text", text: space.description || "" }),
               el("p", { "class": "vf-card__subheading", text: tutorialCount(space) })
             ])
