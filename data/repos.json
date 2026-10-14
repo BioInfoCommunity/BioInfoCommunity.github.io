@@ -18,7 +18,7 @@
             "structures"
           ],
           "stars": 0,
-          "pushed_at": "2026-10-08T12:41:14Z",
+          "pushed_at": "2026-10-14T09:07:32Z",
           "code_languages": [
             {
               "name": "Python",
@@ -70,7 +70,7 @@
         },
         {
           "name": "Foundations-of-protein-structure",
-          "description": null,
+          "description": "This tutorial is aimed at researchers who are interested in using protein structures and integrate these predictions into their projects. An undergraduate-level knowledge of protein structure and structural biology would be an advantage.",
           "html_url": "https://github.com/BioInfoCommunity/Foundations-of-protein-structure",
           "course_url": "https://bioinfocommunity.github.io/Foundations-of-protein-structure/",
           "homepage": null,
