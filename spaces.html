@@ -74,35 +74,25 @@
           <li class="float-right show-for-medium embl-ebi">
             <a class="float-right" style="color: transparent;" href="https://www.ebi.ac.uk">EMBL-EBI</a>
           </li>
-          <!--<li class="float-right search">
-          <a href="#" class="inline-block collpased float-left search-toggle">
-            <span class="show-for-small-only">Search</span>
-          </a>
-        </li>
-        <li class="what about">
-          <a href="https://www.ebi.ac.uk/about">About us</a>
-        </li>
-        <li class="what training">
-          <a href="https://www.ebi.ac.uk/training">Training</a>
-        </li>
-        <li class="what research">
-          <a href="https://www.ebi.ac.uk/research">Research</a>
-        </li>
-        <li class="what services">
-          <a href="https://www.ebi.ac.uk/services">Services</a>
-        </li>
-        <li class="where ebi">
-          <a href="https://www.ebi.ac.uk">EMBL-EBI home</a>
-        </li> -->
         </ul>
       </nav>
     </div>
   </header>
   <div class="vf-body">
     <main id="top">
+      <section class="vf-hero vf-hero--800 vf-u-fullbleed">
+        <div class="vf-hero__content vf-box vf-stack vf-stack--400">
+          <p class="vf-hero__kicker">Community space</p>
+          <h1 class="vf-hero__heading">BioinfoTraining Community</h1>
+          <p class="vf-hero__text">BioinfoTraining Community brings together training resources, community translations and
+            contributions for the life sciences, developed openly on GitHub.</p>
+        </div>
+      </section>
 
-      <div class="vf-content vf-box" id="app" aria-live="polite">
-        <noscript><p>This page needs JavaScript to load the community data.</p></noscript>
+      <div class="vf-content" id="app" aria-live="polite">
+        <noscript>
+          <p>This page needs JavaScript to load the community data.</p>
+        </noscript>
       </div>
 
     </main>
@@ -155,7 +145,7 @@
           return el("li", { "class": "vf-list--inline__item" }, [
             name,
             " ",
-            el("span", { "class": "vf-badge " + (TRANSLATION_BADGE[t.status] || ""), text: t.status }),
+            el("span", { "class": "vf-badge customBadgeGrey" + (TRANSLATION_BADGE[t.status] || ""), text: t.status }),
             " "
           ]);
         }
@@ -167,7 +157,7 @@
             el("h4", { "class": "vf-card__subheading", text: "Available languages" }),
             el("ul", { "class": "vf-list vf-list--inline" }, repo.translations.map(languageChip))
           ];
-          return el("article", { "class": "vf-card vf-card--bordered" }, [
+          return el("article", { "class": "vf-card" }, [
             el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, children)
           ]);
         }
@@ -184,7 +174,7 @@
               el("p", { "class": "vf-section-header__subheading", text: "Updates, new translations, activities and opportunities to contribute. Sample items." })
             ]),
             el("div", { "class": "vf-stack vf-stack--400" }, SAMPLE_NEWS.map(function (item) {
-              return el("article", { "class": "vf-card vf-card--bordered" }, [
+              return el("article", { "class": "vf-card" }, [
                 el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, [
                   el("p", { "class": "vf-card__subheading", text: item.kind + " · Sample" }),
                   el("h3", { "class": "vf-card__heading", text: item.title }),
@@ -229,7 +219,7 @@
         }
 
         function spaceIndexCard(space) {
-          return el("article", { "class": "vf-card vf-card--bordered" }, [
+          return el("article", { "class": "vf-card" }, [
             el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, [
               el("h3", { "class": "vf-card__heading" }, [link("spaces.html?space=" + encodeURIComponent(space.id), space.title)]),
               el("p", null, [spaceBadge(space)]),
