@@ -12,6 +12,10 @@
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/@visual-framework/ebi-header-footer@2.1.5/ebi-header-footer.css">
   <style>
+    .space-languages {
+      font-size: 16px;
+    }
+
     .customBadgeGrey {
       background-color: #f3f3f3 !important;
       border: 0 !important;
@@ -82,7 +86,7 @@
     <main id="top">
       <section class="vf-hero vf-hero--800 vf-u-fullbleed">
         <div class="vf-hero__content vf-box vf-stack vf-stack--400">
-          <p class="vf-hero__kicker">Community space</p>
+          <p class="vf-hero__kicker"><a href="index.html">All communities</a></p>
           <h1 class="vf-hero__heading">BioinfoTraining Community</h1>
           <p class="vf-hero__text">BioinfoTraining Community brings together training resources, community translations and
             contributions for the life sciences, developed openly on GitHub.</p>
@@ -106,12 +110,6 @@
           "future": { label: "Future", cls: "vf-badge--secondary" }
         };
 
-        // Badge text is the raw status value, so "in-progress" reads as written in spaces.json.
-        var TRANSLATION_BADGE = {
-          "published": "vf-badge--primary",
-          "in-progress": "vf-badge--secondary",
-          "planned": ""
-        };
 
         // Builds an element from plain values, so repo data is never parsed as HTML.
         function el(tag, attrs, children) {
@@ -140,31 +138,50 @@
           return n === 1 ? "1 tutorial" : n + " tutorials";
         }
 
-        function languageChip(t) {
-          var name = t.course_url ? link(t.course_url, t.label) : el("span", { text: t.label });
-          return el("li", { "class": "vf-list--inline__item" }, [
-            name,
-            " ",
-            el("span", { "class": "vf-badge customBadgeGrey" + (TRANSLATION_BADGE[t.status] || ""), text: t.status }),
-            " "
-          ]);
+        // Groups languages by status on one line, in the order each status first appears.
+        function languageGroups(translations) {
+          var order = [];
+          var groups = {};
+          translations.forEach(function (t) {
+            if (!groups[t.status]) {
+              groups[t.status] = [];
+              order.push(t.status);
+            }
+            groups[t.status].push(t);
+          });
+
+          var items = [];
+          order.forEach(function (status, g) {
+            if (g > 0) items.push(" · ");
+            items.push(el("span", { text: status.charAt(0).toUpperCase() + status.slice(1) + ": " }));
+            groups[status].forEach(function (t, i) {
+              if (i > 0) items.push(" | ");
+              items.push(t.course_url ? link(t.course_url, t.label) : el("span", { text: t.label }));
+            });
+          });
+          return [el("p", { "class": "space-languages vf-u-margin--0" }, items)];
+        }
+
+        function formatDate(iso) {
+          return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
         }
 
         function tutorialCard(repo) {
-          var children = [
-            el("h3", { "class": "vf-card__heading" }, [link(repo.html_url, repo.name)]),
-            el("p", { "class": "vf-card__text", text: repo.description || "No description provided." }),
-            el("h4", { "class": "vf-card__subheading", text: "Available languages" }),
-            el("ul", { "class": "vf-list vf-list--inline" }, repo.translations.map(languageChip))
-          ];
-          return el("article", { "class": "vf-card" }, [
-            el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, children)
+          return el("article", { "class": "vf-summary vf-summary--news" }, [
+            el("h3", { "class": "vf-summary__title" }, [
+              el("a", { "class": "vf-summary__link", href: repo.html_url, text: repo.name })
+            ]),
+            el("div", { "class": "vf-summary__text vf-u-margin--0" }, [
+              el("span", { text: repo.description || "No description provided." }),
+              el("p", { text: "Available languages" })
+            ].concat(languageGroups(repo.translations))),
+            el("div", {"class": "vf-u-margin__top--400"})
           ]);
         }
 
         var SAMPLE_NEWS = [
-          { title: "Portuguese translation of AlphaFold: A Practical Guide", kind: "Community update", text: "Find out about the community's work to make AlphaFold training accessible in more languages." },
-          { title: "AlphaFold in Practice: Research Use Cases", kind: "Webinar series", text: "Explore research applications of AlphaFold through community-led presentations." }
+          { date: "9 October 2026", title: "Portuguese translation of AlphaFold: A Practical Guide", kind: "Community update", text: "Find out about the community's work to make AlphaFold training accessible in more languages." },
+          { date: "1 October 2026", title: "AlphaFold in Practice: Research Use Cases", kind: "Webinar series", text: "Explore research applications of AlphaFold through community-led presentations." }
         ];
 
         function newsSection() {
@@ -173,12 +190,16 @@
               el("h2", { "class": "vf-section-header__heading", id: "news-heading", text: "Community news" }),
               el("p", { "class": "vf-section-header__subheading", text: "Updates, new translations, activities and opportunities to contribute. Sample items." })
             ]),
-            el("div", { "class": "vf-stack vf-stack--400" }, SAMPLE_NEWS.map(function (item) {
-              return el("article", { "class": "vf-card" }, [
-                el("div", { "class": "vf-card__content vf-stack vf-stack--400" }, [
-                  el("p", { "class": "vf-card__subheading", text: item.kind + " · Sample" }),
-                  el("h3", { "class": "vf-card__heading", text: item.title }),
-                  el("p", { "class": "vf-card__text", text: item.text })
+            el("div", null, SAMPLE_NEWS.map(function (item) {
+              return el("article", { "class": "vf-summary vf-summary--news" }, [
+                el("span", { "class": "vf-summary__date", text: item.date }),
+                el("h3", { "class": "vf-summary__title" }, [
+                  el("a", { "class": "vf-summary__link", href: "https://github.com/BioInfoCommunity", text: item.title })
+                ]),
+                el("p", { "class": "vf-summary__text" }, [
+                  el("span", { "class": "vf-summary__category", text: item.kind + " · Sample" }),
+                  " ",
+                  item.text
                 ])
               ]);
             }))
@@ -186,11 +207,6 @@
         }
 
         function spaceDetail(space) {
-          var heading = el("div", { "class": "vf-section-header" }, [
-            el("h1", { "class": "vf-section-header__heading", text: space.title }),
-            el("p", { "class": "vf-section-header__subheading", text: space.description || "" })
-          ]);
-
           var actions = el("p", null, [
             link("#training", "Explore tutorials"),
             " · ",
@@ -202,17 +218,16 @@
               el("h2", { "class": "vf-section-header__heading", id: "training-heading", text: "Training resources" }),
               el("p", { "class": "vf-section-header__subheading", text: "Explore the available tutorials and their translations." })
             ]),
-            el("p", { text: tutorialCount(space) }),
+            // el("p", { text: tutorialCount(space) }),
             space.repos.length
               ? el("div", { "class": "vf-stack vf-stack--400" }, space.repos.map(tutorialCard))
               : el("p", { text: "No tutorials yet." })
           ]);
 
           return el("div", null, [
-            el("p", null, [link("spaces.html", "All communities")]),
-            heading,
+            // el("p", null, [link("spaces.html", "All communities")]),
             el("p", null, [spaceBadge(space)]),
-            actions,
+            // actions,
             training,
             newsSection()
           ]);
@@ -247,19 +262,39 @@
           ]);
         }
 
+        // Hero text from the page markup, kept so the list view can restore it.
+        var heroKicker = document.querySelector(".vf-hero__kicker");
+        var heroHeading = document.querySelector(".vf-hero__heading");
+        var heroText = document.querySelector(".vf-hero__text");
+        var heroDefaults = {
+          kicker: heroKicker.textContent,
+          heading: heroHeading.textContent,
+          text: heroText.textContent
+        };
+
+        function setHero(values) {
+          heroKicker.textContent = "";
+          heroKicker.appendChild(el("a", { href: "index.html", text: values.kicker }));
+          heroHeading.textContent = values.heading;
+          heroText.textContent = values.text;
+        }
+
         function render(container, data) {
           var spaceId = new URLSearchParams(window.location.search).get("space");
           var view;
           if (!spaceId) {
             view = spaceIndex(data);
+            setHero(heroDefaults);
             document.title = "Community spaces | BioInfoCommunity";
           } else {
             var space = data.spaces.filter(function (s) { return s.id === spaceId; })[0];
             if (space) {
               view = spaceDetail(space);
+              setHero({ kicker: "< All communities", heading: space.title, text: space.description || "" });
               document.title = space.title + " | BioInfoCommunity";
             } else {
               view = notFound(spaceId);
+              setHero(heroDefaults);
               document.title = "Space not found | BioInfoCommunity";
             }
           }
