@@ -1,0 +1,60 @@
+---
+layout: base.njk
+pagination:
+  data: spaces
+  size: 1
+  alias: space
+permalink: "spaces/{{ space.id }}/index.html"
+---
+<section class="vf-hero vf-hero--800 vf-u-fullbleed">
+  <div class="vf-hero__content vf-box vf-stack vf-stack--400">
+    <p class="vf-hero__kicker"><a href="/">&lt; All communities</a></p>
+    <h1 class="vf-hero__heading">{{ space.title }}</h1>
+    <p class="vf-hero__text">{{ space.description }}</p>
+  </div>
+</section>
+
+<div class="vf-content vf-box">
+  <section id="training" aria-labelledby="training-heading">
+    <div class="vf-section-header">
+      <h2 class="vf-section-header__heading" id="training-heading">Training resources</h2>
+      <p class="vf-section-header__subheading">Explore the available tutorials and their translations. Please click on the language labels to access the resource in a particular language.</p>
+    </div>
+
+    {% if space.repos.length %}
+    <div class="vf-stack vf-stack--400">
+      {% for repo in space.repos %}
+      <article class="vf-summary vf-summary--news{% if repo.image %} vf-summary--has-image{% endif %}">
+        {% if repo.image %}<img class="vf-summary__image" src="{{ repo.image }}" alt="{{ repo.name }}" loading="lazy">{% endif %}
+        <div class="space-tutorial-body">
+          <h3 class="vf-summary__title">{{ repo.name }}</h3>
+          <div class="vf-summary__text vf-u-margin--0">
+            <span>{{ repo.description or "No description provided." }}</span>
+            <p class="space-languages vf-u-margin--0">{% for group in repo.statusGroups %}<strong>{{ group.label }}: </strong>{% for t in group.items %}{% if not loop.first %} | {% endif %}{% if t.url %}<a href="{{ t.url }}">{{ t.label }}</a>{% else %}<span>{{ t.label }}</span>{% endif %}{% endfor %}{% if not loop.last %} · {% endif %}{% endfor %}</p>
+          </div>
+          <div class="vf-u-margin__top--400"></div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p>No tutorials yet.</p>
+    {% endif %}
+  </section>
+
+  <div class="vf-divider"></div>
+
+  <section id="news" class="vf-u-padding__top--200" aria-labelledby="news-heading">
+    <div class="vf-section-header">
+      <h2 class="vf-section-header__heading" id="news-heading">Community news</h2>
+      <p class="vf-section-header__subheading">Updates, new translations, activities and opportunities to contribute. Sample items.</p>
+    </div>
+    {% for item in sampleNews %}
+    <article class="vf-summary vf-summary--news">
+      <span class="vf-summary__date">{{ item.date }} | <span class="vf-summary__category">{{ item.kind }} · Sample</span></span>
+      <h3 class="vf-summary__title vf-u-margin--0">{{ item.title }}</h3>
+      <p class="vf-summary__text">{{ item.text }}</p>
+    </article>
+    {% endfor %}
+  </section>
+</div>

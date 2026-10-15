@@ -1,0 +1,34 @@
+---
+layout: base.njk
+title: Community spaces | BioInfoCommunity
+description: Repositories, translations and status for each BioInfoCommunity space.
+permalink: /spaces/index.html
+---
+<section class="vf-hero vf-hero--800 vf-u-fullbleed">
+  <div class="vf-hero__content vf-box vf-stack vf-stack--400">
+    <p class="vf-hero__kicker"><a href="/">All communities</a></p>
+    <h1 class="vf-hero__heading">BioinfoTraining Community</h1>
+    <p class="vf-hero__text">BioinfoTraining Community brings together training resources, community translations and contributions for the life sciences, developed openly on GitHub.</p>
+  </div>
+</section>
+
+<div class="vf-content vf-box">
+  <div class="vf-section-header">
+    <h1 class="vf-section-header__heading">Community spaces</h1>
+    <p class="vf-section-header__subheading">Choose a space to see its tutorials and translations.</p>
+    <div class="vf-u-padding--400"></div>
+  </div>
+
+  <div class="vf-grid vf-grid__col-2">
+    {% for s in spaces %}
+    <article class="vf-card">
+      <div class="vf-card__content vf-stack vf-stack--400">
+        <h3 class="vf-card__heading">{{ s.title }}</h3>
+        <p><span class="vf-badge {% if s.status == 'active' %}vf-badge--primary{% else %}vf-badge--secondary{% endif %}">{{ s.status }}</span></p>
+        <p class="vf-card__text">{{ s.description }}</p>
+        <p class="vf-card__subheading">{% if s.repoCount == 1 %}1 tutorial{% else %}{{ s.repoCount }} tutorials{% endif %}</p>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</div>

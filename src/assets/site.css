@@ -1,0 +1,35 @@
+/* Site-level styles on top of the Visual Framework. */
+
+.space-languages {
+  font-size: 16px !important;
+  margin: 16px 0 0 !important;
+}
+
+.vf-summary__title {
+  font-weight: 500;
+}
+
+/* Image cards: image in one column, text in the other, both on one row,
+   so the image height no longer spreads space between the text lines. */
+.vf-summary--news.vf-summary--has-image {
+  grid-template-areas: none;
+  grid-template-rows: auto;
+  grid-template-columns: 180px 1fr;
+  column-gap: 30px;
+}
+
+.vf-summary--news.vf-summary--has-image > .vf-summary__image {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+  max-width: 180px;
+}
+
+.space-tutorial-body {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.vf-summary__date .vf-summary__category {
+  display: inline;
+}

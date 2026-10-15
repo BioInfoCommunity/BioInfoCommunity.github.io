@@ -8,6 +8,7 @@
       "repos": [
         {
           "name": "AlphaFold-A-practical-guide",
+          "image": "https://trainingcontent.embl.org/sites/default/files/book-images/AlphaFold.png",
           "languages": [
             { "code": "en", "label": "English", "branch": "main", "status": "published" },
             { "code": "pt", "label": "Português", "branch": "portuguese", "status": "published" },
@@ -17,6 +18,7 @@
         },
         {
           "name": "Foundations-of-protein-structure",
+          "image": "https://trainingcontent.embl.org/sites/default/files/book-images/Screenshot%202026-02-26%20at%2015.19.41.png",
           "languages": []
         }
       ]

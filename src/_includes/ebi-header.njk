@@ -1,0 +1,43 @@
+<!-- Tell the VF 1.4 not to display a data protection banner. -->
+  <!-- You should use the 2.0 data protection banner from the contentHub. -->
+  <span data-protection-message-disable="true"></span>
+  <!-- embl-ebi global header -->
+  <header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed">
+    <div></div>
+    <div>
+      <nav id="search-bar" class="search-bar global-masthead-interactive-banner">
+        <div class="row padding-bottom-medium">
+          <div class="columns padding-top-medium">
+            <button class="close-button" aria-label="Close alert" type="button">
+              <span aria-hidden="true">x</span>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <form id="global-search" name="global-search" action="/ebisearch/search.ebi" method="GET" class="">
+            <div>
+              <div class="input-group">
+                <label class="vf-form__label vf-u-sr-only" for="global-searchbox">Search all of EMBL-EBI</label>
+                <input type="text" name="query" id="global-searchbox" class="input-group-field"
+                  placeholder="Search all of EMBL-EBI">
+                <div class="input-group-button">
+                  <input type="submit" name="submit" value="Search" class="button">
+                  <input type="hidden" name="db" value="allebi" checked="checked">
+                  <input type="hidden" name="requestFrom" value="masthead-black-bar" checked="checked">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </nav>
+    </div>
+    <div>
+      <nav class="row">
+        <ul id="global-nav" class="menu global-nav text-right" data-vf-google-analytics-region="Black bar">
+          <li class="float-right show-for-medium embl-ebi">
+            <a class="float-right" style="color: transparent;" href="https://www.ebi.ac.uk">EMBL-EBI</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>

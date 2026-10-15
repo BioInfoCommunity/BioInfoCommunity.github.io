@@ -1,0 +1,4 @@
+node_modules/
+_site/
+# Generated from spaces.json and the GitHub API by scripts/build-repos.mjs
+data/

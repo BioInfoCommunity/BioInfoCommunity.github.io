@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+
+  <!-- EMBL-EBI Visual Framework 2.5.30 and EBI global header/footer -->
+  <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.30/css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@visual-framework/ebi-header-footer@2.1.5/ebi-header-footer.css">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+{% include "ebi-header.njk" %}
+
+  <div class="vf-body">
+    <main id="top">
+      {{ content | safe }}
+    </main>
+  </div>
+
+{% include "ebi-footer.njk" %}
+
+  <script src="https://assets.emblstatic.net/vf/v2.5.30/scripts/scripts.js"></script>
+</body>
+</html>
