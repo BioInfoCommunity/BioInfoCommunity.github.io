@@ -106,46 +106,19 @@
           <div
             class="homepage-summaries vf-u-fullbleed vf-u-background-color-ui--grey--light vf-u-padding__top--500 vf-u-padding__bottom--600">
             <div class="vf-grid vf-grid__col-2">
+              {% for s in spaces %}
               <article class="vf-card vf-card--brand vf-card--bordered">
                 <div class="vf-card__content vf-stack vf-stack--400">
+                  {% if s.status == 'active' %}
                   <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeBlue">Active</span>
-                  <h3 class="vf-card__heading"><a class="vf-card__link" href="/spaces/alphafold/">AlphaFold and
-                      structural biology <svg aria-hidden="true"
-                        class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
-                          fill="currentColor" fill-rule="nonzero"></path>
-                      </svg>
-                    </a></h3>
-                  <p class="vf-card__text">Practical guidance on predicting and interpreting protein structures with
-                    AlphaFold, and the foundations of protein structure behind it.</p>
-                </div>
-              </article>
-              <article class="vf-card vf-card--brand vf-card--bordered">
-                <div class="vf-card__content vf-stack vf-stack--400">
+                  {% else %}
                   <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeGrey">Future</span>
-                  <h3 class="vf-card__heading">Ensembl </h3>
-
-                  <p class="vf-card__text">Genome annotation and browsing resources, planned as a future space.</p>
+                  {% endif %}
+                  <h3 class="vf-card__heading">{% if s.status != 'future' %}<a class="vf-card__link" href="/spaces/{{ s.id }}/">{{ s.title }}</a>{% else %}{{ s.title }}{% endif %}</h3>
+                  <p class="vf-card__text">{{ s.description }}</p>
                 </div>
               </article>
-              <article class="vf-card vf-card--brand vf-card--bordered">
-                <div class="vf-card__content vf-stack vf-stack--400">
-                  <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeGrey">Future</span>
-                  <h3 class="vf-card__heading">Biocuration</h3>
-                  <p class="vf-card__text">Curation practice and community-maintained biological data, planned as a
-                    future space.</p>
-                </div>
-              </article>
-              <article class="vf-card vf-card--brand vf-card--bordered">
-                <div class="vf-card__content vf-stack vf-stack--400">
-                  <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeGrey">Future</span>
-                  <h3 class="vf-card__heading">Infrastructure &amp; services</h3>
-                  <p class="vf-card__text">Shared tools, computing infrastructure and services for the community,
-                    planned as a future space.</p>
-                </div>
-              </article>
+              {% endfor %}
             </div>
           </div>
         </section>
