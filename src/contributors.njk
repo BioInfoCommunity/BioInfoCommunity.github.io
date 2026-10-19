@@ -1,0 +1,51 @@
+---
+layout: base.njk
+title: Contributors | BioInfoCommunity
+description: The people who have contributed to the BioInfoCommunity course repositories.
+permalink: /contributors/index.html
+---
+<section class="vf-hero vf-hero--800 vf-u-fullbleed">
+  <div class="vf-hero__content vf-box vf-stack vf-stack--400">
+    <p class="vf-hero__kicker"><a href="/">< All communities</a></p>
+    <h1 class="vf-hero__heading">Contributors</h1>
+    <p class="vf-hero__text">The people who write, translate and maintain our training courses, and the work they have contributed to each repository</p>
+  </div>
+</section>
+
+<div class="vf-content vf-box">
+  <section aria-labelledby="contributors-heading">
+    <div class="vf-section-header">
+      <h2 class="vf-section-header__heading" id="contributors-heading">Our contributors</h2>
+      <div class="vf-u-padding--400"></div>
+    </div>
+
+    {% if contributors.contributors.length %}
+    <div class="vf-grid vf-grid__col-3">
+      {% for person in contributors.contributors %}
+      <article class="vf-card vf-card--bordered">
+        <div class="vf-card__content vf-stack vf-stack--400">
+          <div class="vf-u-display--flex vf-u-align-items--center">
+            <img src="{{ person.avatar_url }}" alt="" width="64" height="64" loading="lazy"
+              style="border-radius: 50%; margin-right: 1rem;">
+            <div>
+              <h3 class="vf-card__heading"><a class="vf-card__link" href="{{ person.html_url }}">{{ person.login }}</a></h3>
+              <p class="vf-card__text">{{ person.contributions }} contribution{% if person.contributions != 1 %}s{% endif %}</p>
+            </div>
+          </div>
+          <ul class="vf-list">
+            {% for r in person.repos %}
+            <li>
+              <a class="vf-link" href="https://github.com/{{ contributors.org }}/{{ r.name }}">{{ r.name }}</a>
+              ({{ r.contributions }})
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p>No contributors yet.</p>
+    {% endif %}
+  </section>
+</div>

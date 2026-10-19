@@ -5,7 +5,8 @@
   "scripts": {
     "build:data": "node scripts/build-repos.mjs",
     "build:highlights": "node scripts/build-highlights.mjs",
-    "build": "npm run build:data && npm run build:highlights && eleventy",
+    "build:contributors": "node scripts/build-contributors.mjs",
+    "build": "npm run build:data && npm run build:highlights && npm run build:contributors && eleventy",
     "serve": "eleventy --serve"
   },
   "devDependencies": {
