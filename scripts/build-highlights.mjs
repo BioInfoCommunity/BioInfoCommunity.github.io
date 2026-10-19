@@ -12,7 +12,7 @@ const STATUSES = new Set(["live", "draft"]);
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const MAX_WORDS = 150;
 // Reference files that are not highlight items.
-const SKIPPED_FILES = new Set(["template.yaml"]);
+const SKIPPED_FILES = new Set(["template.yaml", "README.md"]);
 
 const today = new Date().toISOString().slice(0, 10);
 const errors = [];
