@@ -99,8 +99,7 @@
           <div class="vf-section-header">
             <h2 class="vf-section-header__heading" id="spaces-heading">Our spaces</h2>
             <p>The Community Space is a collaborative platform where scientific communities can share, translate and improve training resources. It supports knowledge exchange, makes learning materials more accessible across languages and regions, and creates opportunities for communities to contribute their expertise and connect with one another.</p>
-            <p class="vf-section-header__subheading">Thematic areas of the community. Each one hosts its own content,
-              maintainers and roadmap.</p>
+            <p class="vf-section-header__subheading">Thematic areas of the community. Each community manages its own learning resources, team and future direction..</p>
             <div class="vf-u-padding--400"></div>
           </div>
           <div
@@ -128,29 +127,22 @@
           <section id="community" aria-labelledby="community-heading">
             <div class="vf-section-header">
               <h2 class="vf-section-header__heading" id="community-heading" style="color: #fff;">Community content</h2>
-              <p class="vf-section-header__subheading" style="color: #fff;">Resources that cut across every space: ways to contribute and news.</p>
+              <p class="vf-section-header__subheading" style="color: #fff;">Resources that cut across every space: ways to contribute and highlights.</p>
               <div class="vf-u-padding--400"></div>
             </div>
             <div class="vf-grid vf-grid__col-4">
               <article class="vf-card">
                 <div class="vf-card__content vf-stack vf-stack--400">
                   <h3 class="vf-card__heading"><a class="vf-card__link"
-                      href="https://github.com/BioInfoCommunity/AlphaFold-A-practical-guide">About</a></h3>
+                      href="/about">About</a></h3>
                   <p class="vf-card__text">Training resources, community translations and contributions</p>
                 </div>
               </article>
               <article class="vf-card">
                 <div class="vf-card__content vf-stack vf-stack--400">
                   <h3 class="vf-card__heading"><a class="vf-card__link"
-                      href="https://github.com/BioInfoCommunity/AlphaFold-A-practical-guide">Github</a></h3>
+                      href="https://github.com/orgs/BioInfoCommunity/repositories">Github</a></h3>
                   <p class="vf-card__text">Access the Github repositories for contributors</p>
-                </div>
-              </article>
-              <article class="vf-card">
-                <div class="vf-card__content vf-stack vf-stack--400">
-                  <h3 class="vf-card__heading"><a class="vf-card__link"
-                      href="https://github.com/BioInfoCommunity/AlphaFold-A-practical-guide">Get involved</a></h3>
-                  <p class="vf-card__text">Get in touch to participate as a contributor or moderator</p>
                 </div>
               </article>
               <article class="vf-card">
@@ -167,15 +159,15 @@
         </div>
 
         <div class="vf-content vf-box">
-          <section id="news" aria-labelledby="news-heading">
+          <section id="highlights" aria-labelledby="highlights-heading">
             <div class="vf-section-header">
-              <h2 class="vf-section-header__heading" id="news-heading">News</h2>
+              <h2 class="vf-section-header__heading" id="highlights-heading">Highlights</h2>
               <p class="vf-section-header__subheading">Updates, new translations, activities and opportunities to contribute.</p>
               <div class="vf-u-padding--400"></div>
             </div>
-            {% if news.home.length %}
+            {% if highlights.home.length %}
             <div class="vf-grid vf-grid__col-3">
-              {% for item in news.home %}
+              {% for item in highlights.home %}
               <article class="vf-card">
                 <div class="vf-card__content vf-stack vf-stack--400">
                   <p class="vf-card__subheading">{{ item.displayDate }}</p>
@@ -184,9 +176,10 @@
                 </div>
               </article>
               {% endfor %}
+              <a class="vf-link" href="/highlights/">See all highlights</a>
             </div>
             {% else %}
-            <p>No news yet.</p>
+            <p>No highlights yet.</p>
             {% endif %}
           </section>
         </div>

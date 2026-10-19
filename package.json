@@ -4,8 +4,8 @@
   "description": "BioInfoCommunity site: static pages built with Eleventy from data/repos.json",
   "scripts": {
     "build:data": "node scripts/build-repos.mjs",
-    "build:news": "node scripts/build-news.mjs",
-    "build": "npm run build:data && npm run build:news && eleventy",
+    "build:highlights": "node scripts/build-highlights.mjs",
+    "build": "npm run build:data && npm run build:highlights && eleventy",
     "serve": "eleventy --serve"
   },
   "devDependencies": {

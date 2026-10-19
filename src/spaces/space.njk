@@ -44,14 +44,14 @@ permalink: "spaces/{{ space.id }}/index.html"
 
   <div class="vf-divider"></div>
 
-  <section id="news" class="vf-u-padding__top--200" aria-labelledby="news-heading">
+  <section id="highlights" class="vf-u-padding__top--200" aria-labelledby="highlights-heading">
     <div class="vf-section-header">
-      <h2 class="vf-section-header__heading" id="news-heading">Community news</h2>
+      <h2 class="vf-section-header__heading" id="highlights-heading">Highlights</h2>
       <p class="vf-section-header__subheading">Updates, new translations, activities and opportunities to contribute.</p>
     </div>
-    {% set spaceNews = news.bySpace[space.id] %}
-    {% if spaceNews.length %}
-    {% for item in spaceNews %}
+    {% set spaceHighlights = highlights.bySpace[space.id] %}
+    {% if spaceHighlights.length %}
+    {% for item in spaceHighlights %}
     <article class="vf-summary vf-summary--news">
       <span class="vf-summary__date">{{ item.displayDate }}</span>
       <h3 class="vf-summary__title vf-u-margin--0">{% if item.url %}<a href="{{ item.url }}">{{ item.title }}</a>{% else %}{{ item.title }}{% endif %}</h3>
@@ -59,7 +59,7 @@ permalink: "spaces/{{ space.id }}/index.html"
     </article>
     {% endfor %}
     {% else %}
-    <p>No news for this space yet.</p>
+    <p>No highlights for this space yet.</p>
     {% endif %}
   </section>
 </div>

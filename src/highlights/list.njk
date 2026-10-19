@@ -1,0 +1,55 @@
+---
+layout: base.njk
+description: BioInfoCommunity highlights, closest to today first, filterable by space.
+pagination:
+  data: highlightsPages
+  size: 1
+  alias: np
+permalink: "{{ np.path }}index.html"
+---
+<section class="vf-hero vf-hero--800 vf-u-fullbleed">
+  <div class="vf-hero__content vf-box vf-stack vf-stack--400">
+    <p class="vf-hero__kicker"><a href="/">< All communities</a></p>
+    <h1 class="vf-hero__heading">Highlights</h1>
+    <p class="vf-hero__text">Updates, new translations, activities and opportunities to contribute.</p>
+  </div>
+</section>
+
+<div class="vf-content vf-box">
+  <section aria-labelledby="highlights-list-heading">
+    <div class="vf-section-header">
+      <h2 class="vf-section-header__heading" id="highlights-list-heading">{{ np.label }}</h2> 
+    </div>
+
+    <div class="vf-form__item vf-u-margin__bottom--600">
+      <label class="vf-label" for="highlights-filter">Filter by space</label>
+      <select class="vf-form__select" id="highlights-filter" onchange="window.location.href = this.value">
+        {% for o in np.options %}
+        <option value="{{ o.url }}"{% if o.selected %} selected{% endif %}>{{ o.label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    {% if np.items.length %}
+    {% for item in np.items %}
+    <article class="vf-summary vf-summary--news">
+      <span class="vf-summary__date">{{ item.displayDate }}</span>
+      <h3 class="vf-summary__title vf-u-margin--0">{% if item.url %}<a href="{{ item.url }}">{{ item.title }}</a>{% else %}{{ item.title }}{% endif %}</h3>
+      <p class="vf-summary__text">{{ item.description }}</p>
+    </article>
+    {% endfor %}
+    {% else %}
+    <p>No highlights for this space yet.</p>
+    {% endif %}
+
+    {% if np.totalPages > 1 %}
+    <nav aria-label="Highlights pages" class="vf-u-margin__top--600">
+      <p>
+        {% if np.prevUrl %}<a href="{{ np.prevUrl }}">Previous</a>{% endif %}
+        <span> Page {{ np.page }} of {{ np.totalPages }} </span>
+        {% if np.nextUrl %}<a href="{{ np.nextUrl }}">Next</a>{% endif %}
+      </p>
+    </nav>
+    {% endif %}
+  </section>
+</div>

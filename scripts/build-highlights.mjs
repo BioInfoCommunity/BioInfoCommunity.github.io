@@ -1,4 +1,4 @@
-// Compiles news/*.yaml into data/news.json. Only items that should be visible today are written.
+// Compiles highlights/*.yaml into data/highlights.json. Only items that should be visible today are written.
 // Node 20+. Fails the build on invalid items so a typo never reaches the site silently.
 
 import { readFile, writeFile, readdir, mkdir } from "node:fs/promises";
@@ -6,12 +6,12 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import yaml from "js-yaml";
 
-const NEWS_DIR = new URL("../news/", import.meta.url);
-const OUT_PATH = new URL("../data/news.json", import.meta.url);
+const HIGHLIGHTS_DIR = new URL("../highlights/", import.meta.url);
+const OUT_PATH = new URL("../data/highlights.json", import.meta.url);
 const STATUSES = new Set(["live", "draft"]);
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const MAX_WORDS = 150;
-// Reference files that are not news items.
+// Reference files that are not highlight items.
 const SKIPPED_FILES = new Set(["template.yaml"]);
 
 const today = new Date().toISOString().slice(0, 10);
@@ -22,7 +22,7 @@ const config = JSON.parse(await readFile(new URL("../spaces.json", import.meta.u
 const spaceIds = new Set(config.spaces.map((s) => s.id));
 
 // JSON_SCHEMA keeps dates as YYYY-MM-DD strings instead of Date objects.
-const files = (await readdir(NEWS_DIR)).filter((f) => /\.ya?ml$/.test(f) && !SKIPPED_FILES.has(f)).sort();
+const files = (await readdir(HIGHLIGHTS_DIR)).filter((f) => /\.ya?ml$/.test(f) && !SKIPPED_FILES.has(f)).sort();
 
 function checkDate(file, field, value) {
   if (!DATE_RE.test(String(value))) {
@@ -36,7 +36,7 @@ const items = [];
 for (const file of files) {
   let raw;
   try {
-    raw = yaml.load(await readFile(join(fileURLToPath(NEWS_DIR), file), "utf8"), { schema: yaml.JSON_SCHEMA });
+    raw = yaml.load(await readFile(join(fileURLToPath(HIGHLIGHTS_DIR), file), "utf8"), { schema: yaml.JSON_SCHEMA });
   } catch (err) {
     errors.push(`${file}: invalid YAML: ${err.message}`);
     continue;
@@ -92,4 +92,4 @@ items.sort((a, b) => daysFromToday(a) - daysFromToday(b) || (a.date === b.date ?
 
 await mkdir(dirname(fileURLToPath(OUT_PATH)), { recursive: true });
 await writeFile(OUT_PATH, JSON.stringify({ generated: today, items }, null, 2) + "\n");
-console.log(`Wrote ${fileURLToPath(OUT_PATH)} with ${items.length} of ${files.length} news items visible on ${today}`);
+console.log(`Wrote ${fileURLToPath(OUT_PATH)} with ${items.length} of ${files.length} highlight items visible on ${today}`);
