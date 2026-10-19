@@ -4,10 +4,12 @@
   "description": "BioInfoCommunity site: static pages built with Eleventy from data/repos.json",
   "scripts": {
     "build:data": "node scripts/build-repos.mjs",
-    "build": "npm run build:data && eleventy",
+    "build:news": "node scripts/build-news.mjs",
+    "build": "npm run build:data && npm run build:news && eleventy",
     "serve": "eleventy --serve"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.6"
+    "@11ty/eleventy": "^3.1.6",
+    "js-yaml": "^4.3.2"
   }
 }

@@ -2,7 +2,6 @@ module.exports = function (eleventyConfig) {
   // Only Nunjucks and Markdown are templates. Plain HTML is copied as-is.
   eleventyConfig.setTemplateFormats(["njk", "md"]);
 
-  eleventyConfig.addPassthroughCopy({ "src/index.html": "index.html" });
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
 
   // Remove trailing spaces left by template tags in generated HTML.

@@ -1,3 +1,6 @@
+---
+# Full HTML page with no layout. Front matter is needed so Eleventy renders it as a template.
+---
 <!DOCTYPE html>
 <html lang="en">
 
@@ -197,32 +200,24 @@
           <section id="news" aria-labelledby="news-heading">
             <div class="vf-section-header">
               <h2 class="vf-section-header__heading" id="news-heading">News</h2>
-              <p class="vf-section-header__subheading">Sample items for team review. Replace with real announcements before publishing.</p>
+              <p class="vf-section-header__subheading">Updates, new translations, activities and opportunities to contribute.</p>
               <div class="vf-u-padding--400"></div>
             </div>
+            {% if news.home.length %}
             <div class="vf-grid vf-grid__col-3">
+              {% for item in news.home %}
               <article class="vf-card">
                 <div class="vf-card__content vf-stack vf-stack--400">
-                  <p class="vf-card__subheading">9 October 2026</p>
-                  <h3 class="vf-card__heading"><a class="vf-card__link" href="https://github.com/BioInfoCommunity">Sample: course module update</a></h3>
-                  <p class="vf-card__text">Placeholder text describing an update to one of the training courses.</p>
+                  <p class="vf-card__subheading">{{ item.displayDate }}</p>
+                  <h3 class="vf-card__heading">{% if item.url %}<a class="vf-card__link" href="{{ item.url }}">{{ item.title }}</a>{% else %}{{ item.title }}{% endif %}</h3>
+                  <p class="vf-card__text">{{ item.description }}</p>
                 </div>
               </article>
-              <article class="vf-card">
-                <div class="vf-card__content vf-stack vf-stack--400">
-                  <p class="vf-card__subheading">5 October 2026</p>
-                  <h3 class="vf-card__heading"><a class="vf-card__link" href="https://github.com/BioInfoCommunity">Sample: new translation available</a></h3>
-                  <p class="vf-card__text">Placeholder text for a newly added translation of course content.</p>
-                </div>
-              </article>
-              <article class="vf-card">
-                <div class="vf-card__content vf-stack vf-stack--400">
-                  <p class="vf-card__subheading">1 October 2026</p>
-                  <h3 class="vf-card__heading"><a class="vf-card__link" href="https://github.com/BioInfoCommunity">Sample: community call scheduled</a></h3>
-                  <p class="vf-card__text">Placeholder text for an upcoming community event or call.</p>
-                </div>
-              </article>
+              {% endfor %}
             </div>
+            {% else %}
+            <p>No news yet.</p>
+            {% endif %}
           </section>
         </div>
 

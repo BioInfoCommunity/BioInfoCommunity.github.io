@@ -47,14 +47,19 @@ permalink: "spaces/{{ space.id }}/index.html"
   <section id="news" class="vf-u-padding__top--200" aria-labelledby="news-heading">
     <div class="vf-section-header">
       <h2 class="vf-section-header__heading" id="news-heading">Community news</h2>
-      <p class="vf-section-header__subheading">Updates, new translations, activities and opportunities to contribute. Sample items.</p>
+      <p class="vf-section-header__subheading">Updates, new translations, activities and opportunities to contribute.</p>
     </div>
-    {% for item in sampleNews %}
+    {% set spaceNews = news.bySpace[space.id] %}
+    {% if spaceNews.length %}
+    {% for item in spaceNews %}
     <article class="vf-summary vf-summary--news">
-      <span class="vf-summary__date">{{ item.date }} | <span class="vf-summary__category">{{ item.kind }} · Sample</span></span>
-      <h3 class="vf-summary__title vf-u-margin--0">{{ item.title }}</h3>
-      <p class="vf-summary__text">{{ item.text }}</p>
+      <span class="vf-summary__date">{{ item.displayDate }}</span>
+      <h3 class="vf-summary__title vf-u-margin--0">{% if item.url %}<a href="{{ item.url }}">{{ item.title }}</a>{% else %}{{ item.title }}{% endif %}</h3>
+      <p class="vf-summary__text">{{ item.description }}</p>
     </article>
     {% endfor %}
+    {% else %}
+    <p>No news for this space yet.</p>
+    {% endif %}
   </section>
 </div>
