@@ -6,7 +6,7 @@ import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ORG = "BioInfoCommunity";
-const SITE = "https://bioinfocommunity.github.io";
+const SITE = "https://www.bioinfotraining-community.org";
 const STATUSES = new Set(["published", "in-progress", "planned"]);
 const token = process.env.GITHUB_TOKEN;
 const warnings = [];

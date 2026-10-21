@@ -12,35 +12,22 @@
           "description": "This tutorial is aimed at researchers who are interested in using AlphaFold to predict protein structures and integrate these predictions into their projects. An undergraduate-level knowledge of protein structure and structural biology would be an advantage.",
           "image": "https://trainingcontent.embl.org/sites/default/files/book-images/AlphaFold.png",
           "html_url": "https://github.com/BioInfoCommunity/AlphaFold-A-practical-guide",
-          "course_url": "https://bioinfocommunity.github.io/AlphaFold-A-practical-guide/",
+          "course_url": "https://www.bioinfotraining-community.org/AlphaFold-A-practical-guide/",
           "homepage": null,
           "topics": [
             "alphafold",
             "structures"
           ],
           "stars": 1,
-          "pushed_at": "2026-10-14T10:49:35Z",
-          "code_languages": [
-            {
-              "name": "Python",
-              "percent": 45.8
-            },
-            {
-              "name": "HTML",
-              "percent": 42.3
-            },
-            {
-              "name": "JavaScript",
-              "percent": 11.9
-            }
-          ],
+          "pushed_at": "2026-10-20T14:48:12Z",
+          "code_languages": [],
           "translations": [
             {
               "code": "en",
               "label": "English",
               "status": "published",
               "branch": "main",
-              "course_url": "https://bioinfocommunity.github.io/AlphaFold-A-practical-guide/en/",
+              "course_url": "https://www.bioinfotraining-community.org/AlphaFold-A-practical-guide/en/",
               "branch_url": "https://github.com/BioInfoCommunity/AlphaFold-A-practical-guide/tree/main"
             },
             {
@@ -48,24 +35,8 @@
               "label": "Português",
               "status": "published",
               "branch": "portuguese",
-              "course_url": "https://bioinfocommunity.github.io/AlphaFold-A-practical-guide/pt/",
+              "course_url": "https://www.bioinfotraining-community.org/AlphaFold-A-practical-guide/pt/",
               "branch_url": "https://github.com/BioInfoCommunity/AlphaFold-A-practical-guide/tree/portuguese"
-            },
-            {
-              "code": "fr",
-              "label": "Français",
-              "status": "in-progress",
-              "branch": "french",
-              "course_url": "https://bioinfocommunity.github.io/AlphaFold-A-practical-guide/fr/",
-              "branch_url": "https://github.com/BioInfoCommunity/AlphaFold-A-practical-guide/tree/french"
-            },
-            {
-              "code": "hi",
-              "label": "हिन्दी",
-              "status": "in-progress",
-              "branch": "hindi",
-              "course_url": "https://bioinfocommunity.github.io/AlphaFold-A-practical-guide/hi/",
-              "branch_url": "https://github.com/BioInfoCommunity/AlphaFold-A-practical-guide/tree/hindi"
             }
           ]
         },
@@ -74,11 +45,11 @@
           "description": "This tutorial is aimed at researchers who are interested in using protein structures and integrate these predictions into their projects. An undergraduate-level knowledge of protein structure and structural biology would be an advantage.",
           "image": "https://trainingcontent.embl.org/sites/default/files/book-images/Screenshot%202026-02-26%20at%2015.19.41.png",
           "html_url": "https://github.com/BioInfoCommunity/Foundations-of-protein-structure",
-          "course_url": "https://bioinfocommunity.github.io/Foundations-of-protein-structure/",
+          "course_url": "https://www.bioinfotraining-community.org/Foundations-of-protein-structure/",
           "homepage": null,
           "topics": [],
           "stars": 0,
-          "pushed_at": "2026-10-16T15:13:27Z",
+          "pushed_at": "2026-10-20T13:45:14Z",
           "code_languages": [],
           "translations": [
             {
@@ -86,7 +57,7 @@
               "label": "English",
               "status": "published",
               "branch": "main",
-              "course_url": "https://bioinfocommunity.github.io/Foundations-of-protein-structure/en/",
+              "course_url": "https://www.bioinfotraining-community.org/Foundations-of-protein-structure/en/",
               "branch_url": "https://github.com/BioInfoCommunity/Foundations-of-protein-structure/tree/main"
             }
           ]

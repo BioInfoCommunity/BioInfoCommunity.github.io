@@ -12,14 +12,15 @@
           "languages": [
             { "code": "en", "label": "English", "branch": "main", "status": "published" },
             { "code": "pt", "label": "Português", "branch": "portuguese", "status": "published" },
-            { "code": "fr", "label": "Français", "branch": "french", "status": "in-progress" },
-            { "code": "hi", "label": "हिन्दी", "branch": "hindi", "status": "in-progress" }
+            { "code": "es", "label": "Spanish", "branch": "spanish", "status": "in-progress" }
           ]
         },
         {
           "name": "Foundations-of-protein-structure",
           "image": "https://trainingcontent.embl.org/sites/default/files/book-images/Screenshot%202026-02-26%20at%2015.19.41.png",
-          "languages": []
+          "languages": [
+            { "code": "en", "label": "English", "branch": "main", "status": "in-progress" }
+          ]
         }
       ]
     },
