@@ -6,6 +6,16 @@
   <title>{{ title }}</title>
   <meta name="description" content="{{ description }}">
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ENPC1BLM6Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-ENPC1BLM6Z');
+  </script>
+
   <!-- EMBL-EBI Visual Framework 2.5.30 and EBI global header/footer -->
   <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.30/css/styles.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@visual-framework/ebi-header-footer@2.1.5/ebi-header-footer.css">

@@ -4,6 +4,9 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
 
+  // GitHub Pages reads the custom domain from CNAME at the root of the published site.
+  eleventyConfig.addPassthroughCopy({ CNAME: "CNAME" });
+
   // Remove trailing spaces left by template tags in generated HTML.
   eleventyConfig.addTransform("trim-trailing-whitespace", function (content, outputPath) {
     if (outputPath && outputPath.endsWith(".html")) {
