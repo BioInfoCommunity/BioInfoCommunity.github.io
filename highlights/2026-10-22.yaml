@@ -1,20 +1,7 @@
 title: Soft Launch of the BioinfoTraining Community
-description: >-
-   We are pleased to introduce the initial release of
-  the BioinfoTraining Community, a platform designed
-  to support scientific communities in sharing,
-  translating and developing training resources.
-  Initially focused on the AlphaFold education
-  community, the platform aims to facilitate
-  knowledge exchange, collaboration and access
-  to training materials across the life sciences.
-  This soft launch marks the beginning of a testing
-  and feedback stage, during which we will gather
-  input from community members, refine the platform
-  and prepare for a wider release.
-  We welcome your feedback and suggestions!
+description: We are pleased to introduce the initial release of the BioinfoTraining Community, a platform designed to support scientific communities in sharing, translating and developing training resources. Initially focused on the AlphaFold education community, the platform aims to facilitate knowledge exchange, collaboration and access to training materials across the life sciences. This soft launch marks the beginning of a testing and feedback stage, during which we will gather input from community members, refine the platform and prepare for a wider release. We welcome your feedback and suggestions!
 url: https://www.bioinfotraining-community.org/
-community: 
+community: alphafold
 date: 2026-10-22
 date_archive: 2027-10-22
 status: live
