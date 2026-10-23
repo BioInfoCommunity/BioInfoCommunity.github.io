@@ -2,7 +2,7 @@
   "spaces": [
     {
       "id": "alphafold",
-      "title": "AlphaFold & structural biology",
+      "title": "AlphaFold and structural biology",
       "description": "Practical guidance on predicting and interpreting protein structures using AlphaFold, alongside exploring broader concepts, tools, and methods in structural biology.",
       "status": "active",
       "repos": [
