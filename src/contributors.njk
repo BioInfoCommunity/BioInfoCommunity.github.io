@@ -48,4 +48,31 @@ permalink: /contributors/index.html
     <p>No contributors yet.</p>
     {% endif %}
   </section>
+
+  {% if otherContributors.length %}
+  <section aria-labelledby="other-contributors-heading" class="vf-u-margin__top--800">
+    <div class="vf-section-header">
+      <h2 class="vf-section-header__heading" id="other-contributors-heading">Other contributors</h2>
+      <p class="vf-section-header__subheading">People who have contributed to the project in ways not shown in the repositories</p>
+      <div class="vf-u-padding--400"></div>
+    </div>
+    <div class="vf-grid vf-grid__col-3">
+      {% for person in otherContributors %}
+      <article class="vf-card vf-card--bordered">
+        <div class="vf-card__content vf-stack vf-stack--400">
+          <div class="vf-u-display--flex vf-u-align-items--center">
+            {% if person.github %}
+            <img src="https://github.com/{{ person.github }}.png?size=128" alt="" width="64" height="64" loading="lazy"
+              style="border-radius: 50%; margin-right: 1rem;">
+            <h3 class="vf-card__heading"><a class="vf-card__link" href="https://github.com/{{ person.github }}">{{ person.name }}</a></h3>
+            {% else %}
+            <h3 class="vf-card__heading">{{ person.name }}</h3>
+            {% endif %}
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
 </div>
