@@ -13,7 +13,7 @@ npm run serve   # local preview with live reload
 - `spaces.json`: which repos belong to which space, their translation branches and status.
 - `scripts/build-repos.mjs`: writes `data/repos.json` from the GitHub API (generated, not committed).
 - `scripts/build-contributors.mjs`: writes `data/contributors.json`, the contributors of the org's public repos merged across repos, shown at `/contributors/` (generated, not committed). Bots and forks are left out.
-- `contributors.yaml`: people added by hand, shown after the GitHub contributors on `/contributors/` (for work the repos don't show). Each entry has a `name` and an optional `github` username.
+- `contributors.yaml`: people added by hand, shown under "Other contributors" on `/contributors/` (for work the repos don't show). Each entry has a `name` and an optional `github` username.
 - `src/`: pages and templates. `src/spaces/` generates the space list and one page per space.
 - `src/index.njk`: the homepage.
 
